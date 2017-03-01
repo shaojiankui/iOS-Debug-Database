@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E163f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,20 +21,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAM-aj-1Cx">
-                                <rect key="frame" x="164" y="324" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NTO-mq-XZD">
+                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <action selector="connectTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UEE-3a-D6F"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="VkO-Ag-7Bl"/>
+                                </connections>
+                            </webView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sX3-HC-MdM">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <color key="backgroundColor" red="0.1019607843" green="0.6588235294" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="refresh web console"/>
+                                <connections>
+                                    <action selector="refreshTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8lF-zI-XJi"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="NTO-mq-XZD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="656-oI-sM2"/>
+                            <constraint firstItem="sX3-HC-MdM" firstAttribute="top" secondItem="NTO-mq-XZD" secondAttribute="bottom" id="H5s-dI-kDv"/>
+                            <constraint firstItem="sX3-HC-MdM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="P3A-R7-fos"/>
+                            <constraint firstAttribute="trailing" secondItem="sX3-HC-MdM" secondAttribute="trailing" id="Yht-Jj-kms"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="sX3-HC-MdM" secondAttribute="bottom" id="lxD-cl-3KF"/>
+                            <constraint firstItem="NTO-mq-XZD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qfc-AO-R3U"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NTO-mq-XZD" secondAttribute="bottom" constant="49" id="rNk-NM-wWh"/>
+                            <constraint firstAttribute="trailing" secondItem="NTO-mq-XZD" secondAttribute="trailing" id="zHR-n6-j03"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="webView" destination="NTO-mq-XZD" id="KnL-do-jM8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="24.800000000000001" y="36.431784107946029"/>
         </scene>
     </scenes>
 </document>

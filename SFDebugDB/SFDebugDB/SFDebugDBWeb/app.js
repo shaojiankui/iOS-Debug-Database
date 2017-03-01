@@ -30,7 +30,7 @@ function getData(tableName) {
 
    $.ajax({url: "getAllDataFromTheTable?tableName="+tableName, success: function(result){
 
-           result = JSON.parse(result);
+//           result = JSON.parse(result);
            inflateData(result);
 
    }});
@@ -142,9 +142,9 @@ function inflateData(result){
       }
       var columnData = result.rows;
        var tableId = "#db-data";
-        if ($.fn.DataTable.isDataTable(tableId) ) {
-          $(tableId).DataTable().destroy();
-        }
+//        if ($.fn.DataTable.isDataTable(tableId) ) {
+//          $(tableId).DataTable().destroy();
+//        }
 
        $("#db-data-div").remove();
        $("#parent-data-div").append('<div id="db-data-div"><table class="display nowrap" cellpadding="0" border="0" cellspacing="0" width="100%" class="table table-striped table-bordered display" id="db-data"></table></div>');

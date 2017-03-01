@@ -41,6 +41,7 @@
         NSError *error = nil;
         if ([_server acceptOnPort:port error:&error]) {
             NSLog(@"server start on %@:%zd",_server.localHost,_server.localPort);
+            _host = _server.localHost;
         }else{
             NSLog(@"error %@",error);
         }
@@ -58,8 +59,8 @@
     }
     return databasePaths;
 }
-- (void)router:(NSString*)method rootPath:(NSString*)rootPath handler:(SFDebugRouterHandler)handler{
-    [self _router:method path:rootPath type:@"rootpath" handler:handler];
+- (void)router:(NSString*)method basePath:(NSString*)basePath handler:(SFDebugRouterHandler)handler{
+    [self _router:method path:basePath type:@"basepath" handler:handler];
 }
 - (void)router:(NSString*)method path:(NSString*)path handler:(SFDebugRouterHandler)handler{
     [self _router:method path:path type:@"url" handler:handler];
@@ -120,7 +121,7 @@
                     found = YES;
                 }
             }
-            else if ([router.type isEqualToString:@"rootpath"]) {
+            else if ([router.type isEqualToString:@"basepath"]) {
                 if ([request.path hasPrefix:router.path]) {
                     SFDebugDBRespone *respone = router.handler(request);
                     [sock writeData:respone.data withTimeout:-1 tag:0];

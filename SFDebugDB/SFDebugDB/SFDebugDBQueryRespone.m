@@ -10,6 +10,8 @@
 #import "SFDebugDBManager.h"
 #import "SFDebugDBUtil.h"
 #import "SFDebugDB.h"
+
+#import "SFDebugDBModel.h"
 @implementation SFDebugDBQueryRespone
 + (NSString*)getDBListResponse:(NSArray*)databaseDirectorys{
     NSMutableDictionary *databasePaths = [NSMutableDictionary dictionary];
@@ -22,9 +24,7 @@
     }
     
     NSDictionary *JSON   = @{@"rows":[databasePaths allKeys]?:[NSNull null]};
-    
     NSError *error = nil;
-    
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:JSON
                                                        options:NSJSONWritingPrettyPrinted  error:&error];
     
@@ -34,36 +34,85 @@
 + (NSString*)getTableListResponse:(NSString*)route{
     NSString *database = nil;
     if ([route rangeOfString:@"?database="].location != NSNotFound){
-        database = [route sf_url_valueForParameter:@"database"];
+        database = [[route substringFromIndex:[route rangeOfString:@"?"].location+1] sf_url_valueForParameter:@"database"];
     }
     NSString *databasePath = [[[SFDebugDB shared] databases] objectForKey:database];
     
     [[SFDebugDBManager sharedManager] openDatabase:databasePath];;
-    NSArray *list = [[SFDebugDBManager sharedManager] getAllTableName:[SFDebugDBManager sharedManager].db];
+    NSArray *list = [[SFDebugDBManager sharedManager] allTables];
     NSDictionary *JSON   = @{@"rows":list?:[NSNull null]};
 
     return [JSON sf_dic_JSONString];
 }
+
 + (NSString*)getAllDataFromTheTableResponse:(NSString*)route {
     
     NSString *tableName = nil;
     
     if ([route rangeOfString:@"?tableName="].location != NSNotFound){
-//        tableName = route.substring(route.indexOf("=") + 1, route.length());
-        tableName = [route substringWithRange:NSMakeRange([route rangeOfString:@"="].location+1, route.length)];
+        tableName =[[route substringFromIndex:[route rangeOfString:@"?"].location+1] sf_url_valueForParameter:@"tableName"];
+    }
+    
+    NSArray *response = [[SFDebugDBManager sharedManager] getTableData:nil sql:[NSString stringWithFormat:@"select * from %@",tableName] tableName:tableName];
+    
+    NSMutableDictionary *tableData = [NSMutableDictionary dictionary];
+    [tableData setObject:@(1) forKey:@"isSelectQuery"];
+    [tableData setObject:@(1) forKey:@"isSuccessful"];
+
+
+    if (tableName.length>0) {
+        NSDictionary *tableInfoList = [[SFDebugDBManager sharedManager] infoForTable:tableName];
+        NSMutableArray *tableInfoResult = [NSMutableArray array];
+        for (int i = 0; i < [[tableInfoList allKeys] count]; i++) {
+            NSMutableDictionary *tableInfo = [NSMutableDictionary dictionary];
+            
+            NSString *columnName = [[tableInfoList allKeys] objectAtIndex:i];
+            NSString *columnValue = [tableInfoList objectForKey:columnName];
+            if ([columnName isEqualToString:@"pk"]) {
+                [tableInfo setObject:@(1) forKey:@"isPrimary"];
+            }
+            if ([columnName isEqualToString:@"name"]) {
+                [tableInfo setObject:columnValue?:@"" forKey:@"title"];
+
+            }
+            [tableInfoResult addObject:tableInfo];
+        }
+        [tableData setObject:tableInfoResult forKey:@"tableInfos"];
+    }
+    BOOL isEditable = tableName != nil && [tableData objectForKey:@"tableInfos"] != nil;
+    
+    [tableData setObject:@(isEditable) forKey:@"isEditable"];
+
+    if ([tableData objectForKey:@"tableInfos"] == nil) {
+        NSMutableArray *tableInfos = [NSMutableArray array];
+        for (int i = 0; i < [response count]; i++) {
+            NSDictionary *item = [response objectAtIndex:i];
+            SFDebugDBModelTableInfo *tableInfo = [[SFDebugDBModelTableInfo alloc]init];
+            tableInfo.title = [[item allKeys] firstObject];
+            tableInfo.isPrimary = true;
+            [tableInfos addObject:tableInfo];
+        }
+        [tableData setObject:tableInfos forKey:@"tableInfos"];
 
     }
     
-//    NSDictionary *response;
-//    
-//    if (isDbOpened) {
-//        NSString sql = "SELECT * FROM " + tableName;
-//        response = [SFDebugDBManager sharedManager] getTableData(mDatabase, sql, tableName);
-//    } else {
-//        response = PrefHelper.getAllPrefData(mContext, tableName);
-//    }
     
-    return nil;
+    
+    NSMutableArray *rows = [NSMutableArray array];
+
+    for (int i = 0; i < [response count]; i++) {
+        NSDictionary *item = [response objectAtIndex:i];
+
+        NSMutableDictionary *row = [NSMutableDictionary dictionary];
+        [row setObject:@"ss" forKey:@"dataType"];
+        [row setObject:[[item allValues] firstObject] forKey:@"value"];
+
+        [rows addObject:row];
+    }
+    [tableData setObject:rows forKey:@"rows"];
+
+    
+    return [tableData sf_dic_JSONString];
     
 }
 //

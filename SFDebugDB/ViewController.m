@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "SFDebugDB.h"
-@interface ViewController ()
+@interface ViewController ()<UIWebViewDelegate>
 
 @end
 
@@ -17,6 +17,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+//    NSString *path = [NSString stringWithFormat:@"http://%@:%zd",[SFDebugDB shared].host,[SFDebugDB shared].port];
+//    
+//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:path]]];
 }
 
 
@@ -26,7 +29,13 @@
 }
 
 
-- (IBAction)connectTouched:(id)sender {
-   
+
+- (IBAction)refreshTouched:(id)sender {
+//    NSString *path = [NSString stringWithFormat:@"http://127.0.0.1:%zd",[SFDebugDB shared].port];
+//    
+//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:path]]];
+}
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+
 }
 @end

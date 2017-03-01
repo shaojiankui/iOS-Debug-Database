@@ -16,13 +16,14 @@
 
 @interface SFDebugDB : NSObject
 @property(nonatomic, readonly) NSUInteger port;
+@property(nonatomic, readonly) NSString *host;
 @property(nonatomic, readonly) NSArray *directorys;
 @property(nonatomic, readonly) NSDictionary *databases;
 - (instancetype)init __attribute__((unavailable("Forbidden use init!")));
 + (SFDebugDB*)shared;
 
 + (instancetype)startWithPort:(NSInteger)port directorys:(NSArray*)directorys;
-- (void)router:(NSString*)method rootPath:(NSString*)rootPath handler:(SFDebugRouterHandler)handler;
+- (void)router:(NSString*)method basePath:(NSString*)basePath handler:(SFDebugRouterHandler)handler;
 
 - (void)router:(NSString*)method path:(NSString*)path handler:(SFDebugRouterHandler)handler;
 

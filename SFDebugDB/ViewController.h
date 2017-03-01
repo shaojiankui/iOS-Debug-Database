@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
-- (IBAction)connectTouched:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 
+- (IBAction)refreshTouched:(id)sender;
 @end
 

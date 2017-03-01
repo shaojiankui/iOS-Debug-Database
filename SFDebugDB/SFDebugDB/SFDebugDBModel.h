@@ -7,11 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
+@class TableInfo;
+@class ColumnData;
 
 @interface SFDebugDBModel : NSObject
-@property (nonatomic,strong)   NSArray *rows;
-@property (nonatomic,strong)   NSArray *columns;
+@property (nonatomic,strong)   NSMutableArray *tableInfos;
 @property (nonatomic,assign)   BOOL isSuccessful;
-@property (nonatomic,copy)   NSString *error;
-@property (nonatomic,assign)  NSInteger dbVersion;
+@property (nonatomic,strong)   NSMutableArray *rows;
+@property (nonatomic,copy)   NSString *errorMessage;
+@property (nonatomic,assign)   BOOL isEditable;
+@property (nonatomic,assign)   BOOL isSelectQuery;
+-(NSDictionary *)propertyDictionary;
+
+@end
+
+
+
+@interface SFDebugDBModelTableInfo : NSObject
+@property (nonatomic,copy) NSString *title;
+@property (nonatomic,assign) BOOL isPrimary;
+@end
+
+
+@interface SFDebugDBModelColumnData : NSObject
+@property (nonatomic,copy) NSString *dataType;
+@property (nonatomic,strong) id value;
 @end

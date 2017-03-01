@@ -22,8 +22,8 @@
     });
     return manager;
 }
-- (NSDictionary*)getTableData{
-    return nil;
+- (NSArray*)getTableData:(sqlite3 *)db sql:(NSString*)sql tableName:(NSString*)tableName{
+   return [self executeQuery:sql rowType:RowTypeObject];
 }
 - (BOOL)openDatabase:(NSString*)databasePath{
     if (self.dbPath && _db && ![databasePath isEqualToString:self.dbPath])
@@ -58,7 +58,7 @@
     return YES;
     
 }
-- (NSArray*)getAllTableName:(sqlite3 *)db{
+- (NSArray*)allTables{
     NSArray *descs = [self executeQuery:@"SELECT tbl_name FROM sqlite_master WHERE type = 'table'" rowType:RowTypeObject];
     NSMutableArray *result = [NSMutableArray array];
     for (NSDictionary *row in descs) {
@@ -67,7 +67,29 @@
     }
     return result;
 }
-
+//表
+- (NSDictionary*)infoForTable:(NSString *)table
+{
+    char *sql = sqlite3_mprintf("PRAGMA table_info(%q)", [table UTF8String]);
+    NSString *query = [NSString stringWithUTF8String:sql];
+    sqlite3_free(sql);
+    return [[self executeQuery:query rowType:RowTypeObject] firstObject];
+}
+//表列数
+- (NSUInteger)columnsInTable:(NSString *)table
+{
+    char *sql = sqlite3_mprintf("PRAGMA table_info(%q)", [table UTF8String]);
+    NSString *query = [NSString stringWithUTF8String:sql];
+    sqlite3_free(sql);
+    return [[self executeQuery:query rowType:RowTypeObject] count];
+}
+//所有表头
+-(NSArray *)columnTitlesInTable:(NSString *)table
+{
+    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY ROWID ASC LIMIT 1",table];
+    NSDictionary *result = [[self executeQuery:query rowType:RowTypeObject] lastObject];
+    return [result allKeys];
+}
 #pragma mark - execute methods
 /**
  *  无结果集执行更新

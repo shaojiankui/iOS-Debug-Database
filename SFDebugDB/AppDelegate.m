@@ -37,6 +37,12 @@
         return response;
     }];
     
+    [debugDB router:@"GET" extension:@".png" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+        //        NSLog(@"request header:%@",request.headers);
+        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]initWithFileName:request.path];
+        return response;
+    }];
+    
     [debugDB router:@"GET" path:@"/getDbList" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
         SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
 //        response.html =  [SFDebugDBQueryRespone getDBListResponse:debugDB.directorys];
@@ -47,51 +53,52 @@
     }];
 
     
-    [debugDB router:@"GET" rootPath:@"/getTableList" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+    [debugDB router:@"GET" basePath:@"/getTableList" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
         SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
         response.contentType =  @"application/json";
         response.html =  [SFDebugDBQueryRespone getTableListResponse:request.path];
         return response;
     }];
     
-//    [debugDB router:@"GET" path:@"/getAllDataFromTheTable" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-//        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-//        response.contentType =  @"application/json";
-//        return response;
-//    }];
+    [debugDB router:@"GET" basePath:@"/getAllDataFromTheTable" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
+        response.html =  [SFDebugDBQueryRespone getAllDataFromTheTableResponse:request.path];
+        response.contentType =  @"application/json";
+        return response;
+    }];
     
-//    [debugDB router:@"GET" path:@"/getDbList" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+//    [debugDB router:@"GET" basePath:@"/getDbList" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
 //        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
 //        response.contentType =  @"application/json";
 //        return response;
 //    }];
-//    [debugDB router:@"GET" path:@"/updateTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+//    [debugDB router:@"GET" basePath:@"/updateTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
 //        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
 //        response.contentType =  @"application/json";
 //        return response;
 //    }];
-//    [debugDB router:@"GET" path:@"/deleteTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+//    [debugDB router:@"GET" basePath:@"/deleteTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
 //        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
 //        response.contentType =  @"application/json";
 //        return response;
 //    }];
-//    [debugDB router:@"GET" path:@"/deleteTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+//    [debugDB router:@"GET" basePath:@"/deleteTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
 //        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
 //        response.contentType =  @"application/json";
 //        return response;
 //    }];
-//    [debugDB router:@"GET" path:@"/query" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+//    [debugDB router:@"GET" basePath:@"/query" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
 //        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
 //        response.contentType =  @"application/json";
 //        return response;
 //    }];
-//    [debugDB router:@"GET" path:@"/downloadDb" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+//    [debugDB router:@"GET" basePath:@"/downloadDb" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
 //        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
 //        response.contentType =  @"application/json";
 //        return response;
 //    }];
 
-    [[NSRunLoop mainRunLoop] run];
+//    [[NSRunLoop mainRunLoop] run];
     return YES;
 }
 

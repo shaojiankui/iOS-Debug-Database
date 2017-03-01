@@ -27,4 +27,13 @@
     free(props);
     return dict;
 }
+
+@end
+
+@implementation SFDebugDBModelTableInfo
+@end
+
+
+@implementation SFDebugDBModelColumnData
+
 @end

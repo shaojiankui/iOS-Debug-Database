@@ -11,4 +11,5 @@
 @interface SFDebugDBQueryRespone : SFDebugDBRespone
 + (NSString*)getDBListResponse:(NSArray*)databaseDirectorys;
 + (NSString*)getTableListResponse:(NSString*)route;
++ (NSString*)getAllDataFromTheTableResponse:(NSString*)route;
 @end

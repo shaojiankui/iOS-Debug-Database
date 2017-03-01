@@ -19,7 +19,13 @@ typedef void (^FetchItemBlock)(id row, NSError *error, BOOL finished);
 
 + (instancetype)sharedManager;
 - (BOOL)openDatabase:(NSString*)databasePath;
-- (NSDictionary*)getTableData;
-- (NSArray*)getAllTableName:(sqlite3 *)db;
+- (NSArray*)getTableData:(sqlite3 *)db sql:(NSString*)sql tableName:(NSString*)tableName;
 
+
+- (NSArray*)allTables;
+- (NSDictionary*)infoForTable:(NSString *)table;
+//表列数
+- (NSUInteger)columnsInTable:(NSString *)table;
+//所有表头
+-(NSArray *)columnTitlesInTable:(NSString *)table;
 @end
