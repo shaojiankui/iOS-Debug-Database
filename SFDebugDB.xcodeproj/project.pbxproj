@@ -1,0 +1,507 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B803E00B1E66A6400050C4AA /* app.js in Resources */ = {isa = PBXBuildFile; fileRef = B803DFFB1E66A6400050C4AA /* app.js */; };
+		B803E00C1E66A6400050C4AA /* bootstrap.min.css in Resources */ = {isa = PBXBuildFile; fileRef = B803DFFC1E66A6400050C4AA /* bootstrap.min.css */; };
+		B803E00D1E66A6400050C4AA /* bootstrap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = B803DFFD1E66A6400050C4AA /* bootstrap.min.js */; };
+		B803E00E1E66A6400050C4AA /* buttons.dataTables.min.css in Resources */ = {isa = PBXBuildFile; fileRef = B803DFFE1E66A6400050C4AA /* buttons.dataTables.min.css */; };
+		B803E00F1E66A6400050C4AA /* custom.css in Resources */ = {isa = PBXBuildFile; fileRef = B803DFFF1E66A6400050C4AA /* custom.css */; };
+		B803E0101E66A6400050C4AA /* dataTables.altEditor.free.js in Resources */ = {isa = PBXBuildFile; fileRef = B803E0001E66A6400050C4AA /* dataTables.altEditor.free.js */; };
+		B803E0111E66A6400050C4AA /* dataTables.buttons.min.js in Resources */ = {isa = PBXBuildFile; fileRef = B803E0011E66A6400050C4AA /* dataTables.buttons.min.js */; };
+		B803E0121E66A6400050C4AA /* dataTables.responsive.min.js in Resources */ = {isa = PBXBuildFile; fileRef = B803E0021E66A6400050C4AA /* dataTables.responsive.min.js */; };
+		B803E0131E66A6400050C4AA /* dataTables.select.min.js in Resources */ = {isa = PBXBuildFile; fileRef = B803E0031E66A6400050C4AA /* dataTables.select.min.js */; };
+		B803E0141E66A6400050C4AA /* favicon.ico in Resources */ = {isa = PBXBuildFile; fileRef = B803E0041E66A6400050C4AA /* favicon.ico */; };
+		B803E0151E66A6400050C4AA /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = B803E0051E66A6400050C4AA /* index.html */; };
+		B803E0161E66A6400050C4AA /* jquery.dataTables.min.css in Resources */ = {isa = PBXBuildFile; fileRef = B803E0061E66A6400050C4AA /* jquery.dataTables.min.css */; };
+		B803E0171E66A6400050C4AA /* jquery.dataTables.min.js in Resources */ = {isa = PBXBuildFile; fileRef = B803E0071E66A6400050C4AA /* jquery.dataTables.min.js */; };
+		B803E0181E66A6400050C4AA /* jquery.min.js in Resources */ = {isa = PBXBuildFile; fileRef = B803E0081E66A6400050C4AA /* jquery.min.js */; };
+		B803E0191E66A6400050C4AA /* responsive.dataTables.min.css in Resources */ = {isa = PBXBuildFile; fileRef = B803E0091E66A6400050C4AA /* responsive.dataTables.min.css */; };
+		B803E01A1E66A6400050C4AA /* select.dataTables.min.css in Resources */ = {isa = PBXBuildFile; fileRef = B803E00A1E66A6400050C4AA /* select.dataTables.min.css */; };
+		B803E01D1E66B1280050C4AA /* SFDebugDBQueryRespone.m in Sources */ = {isa = PBXBuildFile; fileRef = B803E01C1E66B1280050C4AA /* SFDebugDBQueryRespone.m */; };
+		B803E01F1E66B2930050C4AA /* assets in Resources */ = {isa = PBXBuildFile; fileRef = B803E01E1E66B2930050C4AA /* assets */; };
+		B803E0231E66B4900050C4AA /* SFDebugDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B803E0221E66B4900050C4AA /* SFDebugDBModel.m */; };
+		B803E0241E66BB2F0050C4AA /* test.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = B803E0201E66B2BB0050C4AA /* test.sqlite */; };
+		B803E0271E66CAE10050C4AA /* SFDebugDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B803E0261E66CAE10050C4AA /* SFDebugDBManager.m */; };
+		B803E02A1E66CCE50050C4AA /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B803E0291E66CCE50050C4AA /* libsqlite3.0.tbd */; };
+		B803E02D1E66CFB30050C4AA /* SFDebugDBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B803E02C1E66CFB30050C4AA /* SFDebugDBUtil.m */; };
+		B810308E1E665F0600D3CC3C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B810308D1E665F0600D3CC3C /* main.m */; };
+		B81030911E665F0600D3CC3C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030901E665F0600D3CC3C /* AppDelegate.m */; };
+		B81030941E665F0600D3CC3C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030931E665F0600D3CC3C /* ViewController.m */; };
+		B81030971E665F0600D3CC3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B81030951E665F0600D3CC3C /* Main.storyboard */; };
+		B81030991E665F0600D3CC3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B81030981E665F0600D3CC3C /* Assets.xcassets */; };
+		B810309C1E665F0600D3CC3C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B810309A1E665F0600D3CC3C /* LaunchScreen.storyboard */; };
+		B81030A61E665F4A00D3CC3C /* SFDebugDB.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030A51E665F4A00D3CC3C /* SFDebugDB.m */; };
+		B81030A91E6660D000D3CC3C /* SFDebugDBServer.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030A81E6660D000D3CC3C /* SFDebugDBServer.m */; };
+		B81030AC1E66610600D3CC3C /* SFDebugDBFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030AB1E66610600D3CC3C /* SFDebugDBFinder.m */; };
+		B81030B41E6665DB00D3CC3C /* Documentation.html in Resources */ = {isa = PBXBuildFile; fileRef = B81030AF1E6665DB00D3CC3C /* Documentation.html */; };
+		B81030B51E6665DB00D3CC3C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030B11E6665DB00D3CC3C /* GCDAsyncSocket.m */; };
+		B81030B61E6665DB00D3CC3C /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030B31E6665DB00D3CC3C /* GCDAsyncUdpSocket.m */; };
+		B81030B91E66740200D3CC3C /* SFDebugRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030B81E66740200D3CC3C /* SFDebugRouter.m */; };
+		B81030C21E66753800D3CC3C /* SFDebugDBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030C11E66753800D3CC3C /* SFDebugDBRequest.m */; };
+		B81030C51E667E1A00D3CC3C /* SFDebugDBRespone.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030C41E667E1A00D3CC3C /* SFDebugDBRespone.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B803DFFB1E66A6400050C4AA /* app.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = app.js; sourceTree = "<group>"; };
+		B803DFFC1E66A6400050C4AA /* bootstrap.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.min.css; sourceTree = "<group>"; };
+		B803DFFD1E66A6400050C4AA /* bootstrap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bootstrap.min.js; sourceTree = "<group>"; };
+		B803DFFE1E66A6400050C4AA /* buttons.dataTables.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = buttons.dataTables.min.css; sourceTree = "<group>"; };
+		B803DFFF1E66A6400050C4AA /* custom.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = custom.css; sourceTree = "<group>"; };
+		B803E0001E66A6400050C4AA /* dataTables.altEditor.free.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = dataTables.altEditor.free.js; sourceTree = "<group>"; };
+		B803E0011E66A6400050C4AA /* dataTables.buttons.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = dataTables.buttons.min.js; sourceTree = "<group>"; };
+		B803E0021E66A6400050C4AA /* dataTables.responsive.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = dataTables.responsive.min.js; sourceTree = "<group>"; };
+		B803E0031E66A6400050C4AA /* dataTables.select.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = dataTables.select.min.js; sourceTree = "<group>"; };
+		B803E0041E66A6400050C4AA /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = favicon.ico; sourceTree = "<group>"; };
+		B803E0051E66A6400050C4AA /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		B803E0061E66A6400050C4AA /* jquery.dataTables.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = jquery.dataTables.min.css; sourceTree = "<group>"; };
+		B803E0071E66A6400050C4AA /* jquery.dataTables.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.dataTables.min.js; sourceTree = "<group>"; };
+		B803E0081E66A6400050C4AA /* jquery.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.min.js; sourceTree = "<group>"; };
+		B803E0091E66A6400050C4AA /* responsive.dataTables.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = responsive.dataTables.min.css; sourceTree = "<group>"; };
+		B803E00A1E66A6400050C4AA /* select.dataTables.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = select.dataTables.min.css; sourceTree = "<group>"; };
+		B803E01B1E66B1280050C4AA /* SFDebugDBQueryRespone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDBQueryRespone.h; sourceTree = "<group>"; };
+		B803E01C1E66B1280050C4AA /* SFDebugDBQueryRespone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBQueryRespone.m; sourceTree = "<group>"; };
+		B803E01E1E66B2930050C4AA /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		B803E0201E66B2BB0050C4AA /* test.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.sqlite; sourceTree = "<group>"; };
+		B803E0211E66B4900050C4AA /* SFDebugDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDBModel.h; sourceTree = "<group>"; };
+		B803E0221E66B4900050C4AA /* SFDebugDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBModel.m; sourceTree = "<group>"; };
+		B803E0251E66CAE10050C4AA /* SFDebugDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDBManager.h; sourceTree = "<group>"; };
+		B803E0261E66CAE10050C4AA /* SFDebugDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBManager.m; sourceTree = "<group>"; };
+		B803E0291E66CCE50050C4AA /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		B803E02B1E66CFB30050C4AA /* SFDebugDBUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDBUtil.h; sourceTree = "<group>"; };
+		B803E02C1E66CFB30050C4AA /* SFDebugDBUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBUtil.m; sourceTree = "<group>"; };
+		B81030891E665F0600D3CC3C /* SFDebugDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SFDebugDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B810308D1E665F0600D3CC3C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B810308F1E665F0600D3CC3C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B81030901E665F0600D3CC3C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B81030921E665F0600D3CC3C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		B81030931E665F0600D3CC3C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		B81030961E665F0600D3CC3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B81030981E665F0600D3CC3C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B810309B1E665F0600D3CC3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B810309D1E665F0600D3CC3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B81030A41E665F4A00D3CC3C /* SFDebugDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDB.h; sourceTree = "<group>"; };
+		B81030A51E665F4A00D3CC3C /* SFDebugDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDB.m; sourceTree = "<group>"; };
+		B81030A71E6660D000D3CC3C /* SFDebugDBServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDBServer.h; sourceTree = "<group>"; };
+		B81030A81E6660D000D3CC3C /* SFDebugDBServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBServer.m; sourceTree = "<group>"; };
+		B81030AA1E66610600D3CC3C /* SFDebugDBFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDBFinder.h; sourceTree = "<group>"; };
+		B81030AB1E66610600D3CC3C /* SFDebugDBFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBFinder.m; sourceTree = "<group>"; };
+		B81030AF1E6665DB00D3CC3C /* Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Documentation.html; sourceTree = "<group>"; };
+		B81030B01E6665DB00D3CC3C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		B81030B11E6665DB00D3CC3C /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		B81030B21E6665DB00D3CC3C /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		B81030B31E6665DB00D3CC3C /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		B81030B71E66740200D3CC3C /* SFDebugRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugRouter.h; sourceTree = "<group>"; };
+		B81030B81E66740200D3CC3C /* SFDebugRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugRouter.m; sourceTree = "<group>"; };
+		B81030C01E66753800D3CC3C /* SFDebugDBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDBRequest.h; sourceTree = "<group>"; };
+		B81030C11E66753800D3CC3C /* SFDebugDBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBRequest.m; sourceTree = "<group>"; };
+		B81030C31E667E1A00D3CC3C /* SFDebugDBRespone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDBRespone.h; sourceTree = "<group>"; };
+		B81030C41E667E1A00D3CC3C /* SFDebugDBRespone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBRespone.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B81030861E665F0600D3CC3C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B803E02A1E66CCE50050C4AA /* libsqlite3.0.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B803DFFA1E66A6400050C4AA /* SFDebugDBWeb */ = {
+			isa = PBXGroup;
+			children = (
+				B803E01E1E66B2930050C4AA /* assets */,
+				B803DFFB1E66A6400050C4AA /* app.js */,
+				B803DFFC1E66A6400050C4AA /* bootstrap.min.css */,
+				B803DFFD1E66A6400050C4AA /* bootstrap.min.js */,
+				B803DFFE1E66A6400050C4AA /* buttons.dataTables.min.css */,
+				B803DFFF1E66A6400050C4AA /* custom.css */,
+				B803E0001E66A6400050C4AA /* dataTables.altEditor.free.js */,
+				B803E0011E66A6400050C4AA /* dataTables.buttons.min.js */,
+				B803E0021E66A6400050C4AA /* dataTables.responsive.min.js */,
+				B803E0031E66A6400050C4AA /* dataTables.select.min.js */,
+				B803E0041E66A6400050C4AA /* favicon.ico */,
+				B803E0051E66A6400050C4AA /* index.html */,
+				B803E0061E66A6400050C4AA /* jquery.dataTables.min.css */,
+				B803E0071E66A6400050C4AA /* jquery.dataTables.min.js */,
+				B803E0081E66A6400050C4AA /* jquery.min.js */,
+				B803E0091E66A6400050C4AA /* responsive.dataTables.min.css */,
+				B803E00A1E66A6400050C4AA /* select.dataTables.min.css */,
+			);
+			path = SFDebugDBWeb;
+			sourceTree = "<group>";
+		};
+		B803E0281E66CCE50050C4AA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B803E0291E66CCE50050C4AA /* libsqlite3.0.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B81030801E665F0600D3CC3C = {
+			isa = PBXGroup;
+			children = (
+				B810308B1E665F0600D3CC3C /* SFDebugDB */,
+				B810308A1E665F0600D3CC3C /* Products */,
+				B803E0281E66CCE50050C4AA /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B810308A1E665F0600D3CC3C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B81030891E665F0600D3CC3C /* SFDebugDB.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B810308B1E665F0600D3CC3C /* SFDebugDB */ = {
+			isa = PBXGroup;
+			children = (
+				B81030AD1E66656200D3CC3C /* Vendor */,
+				B81030A31E665F3800D3CC3C /* SFDebugDB */,
+				B810308F1E665F0600D3CC3C /* AppDelegate.h */,
+				B81030901E665F0600D3CC3C /* AppDelegate.m */,
+				B81030921E665F0600D3CC3C /* ViewController.h */,
+				B81030931E665F0600D3CC3C /* ViewController.m */,
+				B803E0201E66B2BB0050C4AA /* test.sqlite */,
+				B81030951E665F0600D3CC3C /* Main.storyboard */,
+				B81030981E665F0600D3CC3C /* Assets.xcassets */,
+				B810309A1E665F0600D3CC3C /* LaunchScreen.storyboard */,
+				B810309D1E665F0600D3CC3C /* Info.plist */,
+				B810308C1E665F0600D3CC3C /* Supporting Files */,
+			);
+			path = SFDebugDB;
+			sourceTree = "<group>";
+		};
+		B810308C1E665F0600D3CC3C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B810308D1E665F0600D3CC3C /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B81030A31E665F3800D3CC3C /* SFDebugDB */ = {
+			isa = PBXGroup;
+			children = (
+				B803DFFA1E66A6400050C4AA /* SFDebugDBWeb */,
+				B81030A41E665F4A00D3CC3C /* SFDebugDB.h */,
+				B81030A51E665F4A00D3CC3C /* SFDebugDB.m */,
+				B81030A71E6660D000D3CC3C /* SFDebugDBServer.h */,
+				B81030A81E6660D000D3CC3C /* SFDebugDBServer.m */,
+				B81030AA1E66610600D3CC3C /* SFDebugDBFinder.h */,
+				B81030AB1E66610600D3CC3C /* SFDebugDBFinder.m */,
+				B81030B71E66740200D3CC3C /* SFDebugRouter.h */,
+				B81030B81E66740200D3CC3C /* SFDebugRouter.m */,
+				B81030C01E66753800D3CC3C /* SFDebugDBRequest.h */,
+				B81030C11E66753800D3CC3C /* SFDebugDBRequest.m */,
+				B81030C31E667E1A00D3CC3C /* SFDebugDBRespone.h */,
+				B81030C41E667E1A00D3CC3C /* SFDebugDBRespone.m */,
+				B803E01B1E66B1280050C4AA /* SFDebugDBQueryRespone.h */,
+				B803E01C1E66B1280050C4AA /* SFDebugDBQueryRespone.m */,
+				B803E0211E66B4900050C4AA /* SFDebugDBModel.h */,
+				B803E0221E66B4900050C4AA /* SFDebugDBModel.m */,
+				B803E0251E66CAE10050C4AA /* SFDebugDBManager.h */,
+				B803E0261E66CAE10050C4AA /* SFDebugDBManager.m */,
+				B803E02B1E66CFB30050C4AA /* SFDebugDBUtil.h */,
+				B803E02C1E66CFB30050C4AA /* SFDebugDBUtil.m */,
+			);
+			path = SFDebugDB;
+			sourceTree = "<group>";
+		};
+		B81030AD1E66656200D3CC3C /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				B81030AE1E6665DB00D3CC3C /* CocoaAsyncSocket */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		B81030AE1E6665DB00D3CC3C /* CocoaAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				B81030AF1E6665DB00D3CC3C /* Documentation.html */,
+				B81030B01E6665DB00D3CC3C /* GCDAsyncSocket.h */,
+				B81030B11E6665DB00D3CC3C /* GCDAsyncSocket.m */,
+				B81030B21E6665DB00D3CC3C /* GCDAsyncUdpSocket.h */,
+				B81030B31E6665DB00D3CC3C /* GCDAsyncUdpSocket.m */,
+			);
+			path = CocoaAsyncSocket;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B81030881E665F0600D3CC3C /* SFDebugDB */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B81030A01E665F0600D3CC3C /* Build configuration list for PBXNativeTarget "SFDebugDB" */;
+			buildPhases = (
+				B81030851E665F0600D3CC3C /* Sources */,
+				B81030861E665F0600D3CC3C /* Frameworks */,
+				B81030871E665F0600D3CC3C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SFDebugDB;
+			productName = SFDebugDB;
+			productReference = B81030891E665F0600D3CC3C /* SFDebugDB.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B81030811E665F0600D3CC3C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = Jakey;
+				TargetAttributes = {
+					B81030881E665F0600D3CC3C = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = B81030841E665F0600D3CC3C /* Build configuration list for PBXProject "SFDebugDB" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B81030801E665F0600D3CC3C;
+			productRefGroup = B810308A1E665F0600D3CC3C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B81030881E665F0600D3CC3C /* SFDebugDB */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B81030871E665F0600D3CC3C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B803E0151E66A6400050C4AA /* index.html in Resources */,
+				B803E00B1E66A6400050C4AA /* app.js in Resources */,
+				B810309C1E665F0600D3CC3C /* LaunchScreen.storyboard in Resources */,
+				B803E0121E66A6400050C4AA /* dataTables.responsive.min.js in Resources */,
+				B803E0131E66A6400050C4AA /* dataTables.select.min.js in Resources */,
+				B803E0161E66A6400050C4AA /* jquery.dataTables.min.css in Resources */,
+				B81030991E665F0600D3CC3C /* Assets.xcassets in Resources */,
+				B81030971E665F0600D3CC3C /* Main.storyboard in Resources */,
+				B803E0141E66A6400050C4AA /* favicon.ico in Resources */,
+				B803E0241E66BB2F0050C4AA /* test.sqlite in Resources */,
+				B803E01F1E66B2930050C4AA /* assets in Resources */,
+				B803E01A1E66A6400050C4AA /* select.dataTables.min.css in Resources */,
+				B803E0111E66A6400050C4AA /* dataTables.buttons.min.js in Resources */,
+				B803E0181E66A6400050C4AA /* jquery.min.js in Resources */,
+				B803E0171E66A6400050C4AA /* jquery.dataTables.min.js in Resources */,
+				B803E0191E66A6400050C4AA /* responsive.dataTables.min.css in Resources */,
+				B803E00D1E66A6400050C4AA /* bootstrap.min.js in Resources */,
+				B803E00E1E66A6400050C4AA /* buttons.dataTables.min.css in Resources */,
+				B803E00F1E66A6400050C4AA /* custom.css in Resources */,
+				B803E00C1E66A6400050C4AA /* bootstrap.min.css in Resources */,
+				B803E0101E66A6400050C4AA /* dataTables.altEditor.free.js in Resources */,
+				B81030B41E6665DB00D3CC3C /* Documentation.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B81030851E665F0600D3CC3C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B81030C51E667E1A00D3CC3C /* SFDebugDBRespone.m in Sources */,
+				B81030C21E66753800D3CC3C /* SFDebugDBRequest.m in Sources */,
+				B803E0231E66B4900050C4AA /* SFDebugDBModel.m in Sources */,
+				B81030A61E665F4A00D3CC3C /* SFDebugDB.m in Sources */,
+				B81030B91E66740200D3CC3C /* SFDebugRouter.m in Sources */,
+				B81030941E665F0600D3CC3C /* ViewController.m in Sources */,
+				B81030911E665F0600D3CC3C /* AppDelegate.m in Sources */,
+				B803E02D1E66CFB30050C4AA /* SFDebugDBUtil.m in Sources */,
+				B803E01D1E66B1280050C4AA /* SFDebugDBQueryRespone.m in Sources */,
+				B81030A91E6660D000D3CC3C /* SFDebugDBServer.m in Sources */,
+				B81030B61E6665DB00D3CC3C /* GCDAsyncUdpSocket.m in Sources */,
+				B803E0271E66CAE10050C4AA /* SFDebugDBManager.m in Sources */,
+				B81030AC1E66610600D3CC3C /* SFDebugDBFinder.m in Sources */,
+				B81030B51E6665DB00D3CC3C /* GCDAsyncSocket.m in Sources */,
+				B810308E1E665F0600D3CC3C /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B81030951E665F0600D3CC3C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B81030961E665F0600D3CC3C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B810309A1E665F0600D3CC3C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B810309B1E665F0600D3CC3C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B810309E1E665F0600D3CC3C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		B810309F1E665F0600D3CC3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B81030A11E665F0600D3CC3C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SFDebugDB/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.skyfox.SFDebugDBTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B81030A21E665F0600D3CC3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SFDebugDB/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.skyfox.SFDebugDBTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B81030841E665F0600D3CC3C /* Build configuration list for PBXProject "SFDebugDB" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B810309E1E665F0600D3CC3C /* Debug */,
+				B810309F1E665F0600D3CC3C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B81030A01E665F0600D3CC3C /* Build configuration list for PBXNativeTarget "SFDebugDB" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B81030A11E665F0600D3CC3C /* Debug */,
+				B81030A21E665F0600D3CC3C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B81030811E665F0600D3CC3C /* Project object */;
+}
