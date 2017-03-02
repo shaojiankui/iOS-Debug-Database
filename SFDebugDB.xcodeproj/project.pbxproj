@@ -45,6 +45,8 @@
 		B81030B91E66740200D3CC3C /* SFDebugRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030B81E66740200D3CC3C /* SFDebugRouter.m */; };
 		B81030C21E66753800D3CC3C /* SFDebugDBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030C11E66753800D3CC3C /* SFDebugDBRequest.m */; };
 		B81030C51E667E1A00D3CC3C /* SFDebugDBRespone.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030C41E667E1A00D3CC3C /* SFDebugDBRespone.m */; };
+		B88B87E11E67D9E5000DC5FA /* Car.db in Resources */ = {isa = PBXBuildFile; fileRef = B88B87DF1E67D9E5000DC5FA /* Car.db */; };
+		B88B87E21E67D9E5000DC5FA /* Contact.db in Resources */ = {isa = PBXBuildFile; fileRef = B88B87E01E67D9E5000DC5FA /* Contact.db */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +104,8 @@
 		B81030C11E66753800D3CC3C /* SFDebugDBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBRequest.m; sourceTree = "<group>"; };
 		B81030C31E667E1A00D3CC3C /* SFDebugDBRespone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDBRespone.h; sourceTree = "<group>"; };
 		B81030C41E667E1A00D3CC3C /* SFDebugDBRespone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBRespone.m; sourceTree = "<group>"; };
+		B88B87DF1E67D9E5000DC5FA /* Car.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = Car.db; sourceTree = "<group>"; };
+		B88B87E01E67D9E5000DC5FA /* Contact.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = Contact.db; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +179,8 @@
 				B81030921E665F0600D3CC3C /* ViewController.h */,
 				B81030931E665F0600D3CC3C /* ViewController.m */,
 				B803E0201E66B2BB0050C4AA /* test.sqlite */,
+				B88B87DF1E67D9E5000DC5FA /* Car.db */,
+				B88B87E01E67D9E5000DC5FA /* Contact.db */,
 				B81030951E665F0600D3CC3C /* Main.storyboard */,
 				B81030981E665F0600D3CC3C /* Assets.xcassets */,
 				B810309A1E665F0600D3CC3C /* LaunchScreen.storyboard */,
@@ -306,7 +312,9 @@
 				B803E0161E66A6400050C4AA /* jquery.dataTables.min.css in Resources */,
 				B81030991E665F0600D3CC3C /* Assets.xcassets in Resources */,
 				B81030971E665F0600D3CC3C /* Main.storyboard in Resources */,
+				B88B87E11E67D9E5000DC5FA /* Car.db in Resources */,
 				B803E0141E66A6400050C4AA /* favicon.ico in Resources */,
+				B88B87E21E67D9E5000DC5FA /* Contact.db in Resources */,
 				B803E0241E66BB2F0050C4AA /* test.sqlite in Resources */,
 				B803E01F1E66B2930050C4AA /* assets in Resources */,
 				B803E01A1E66A6400050C4AA /* select.dataTables.min.css in Resources */,

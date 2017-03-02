@@ -84,7 +84,40 @@ static NSString *const kFragmentBegin       = @"#";
 
 - (NSString *)sf_url_valueForParameter:(NSString *)parameterKey
 {
+    if ([[[self sf_url_parameters] objectForKey:parameterKey] isKindOfClass:[NSNull class]]) {
+        return nil;
+    }
     return [[self sf_url_parameters] objectForKey:parameterKey];
+}
+- (NSString *)sf_query_valueForParameter:(NSString *)parameterKey
+{
+    NSString *string = [[self sf_url_parameters] objectForKey:parameterKey];
+    
+    if ([string isKindOfClass:[NSNull class]]) {
+        return nil;
+    }
+    
+    NSRange range =  [self rangeOfString:@"?"];
+    if(range.location != NSNotFound && (range.location+1<=[self length])){
+        string = [([[self substringFromIndex:range.location+1] sf_url_valueForParameter:parameterKey]?:@"") stringByRemovingPercentEncoding];
+    }
+    
+    return string;
+}
+
+@end
+
+
+@implementation NSString (sf_dictionaryValue)
+-(id)sf_JSONValue{
+    NSError *errorJson;
+    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[self dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&errorJson];
+    if (errorJson != nil) {
+#ifdef DEBUG
+        NSLog(@"fail to get dictioanry from JSON: %@, error: %@", self, errorJson);
+#endif
+    }
+    return jsonDict;
 }
 @end
 

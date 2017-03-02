@@ -25,8 +25,15 @@
         SFDebugDBRespone *response = [[SFDebugDBRespone alloc]initWithFile:index];
         return response;
     }];
+    
     [debugDB router:@"GET" extension:@".js" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
 //        NSLog(@"request header:%@",request.headers);
+        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]initWithFileName:request.path];
+        return response;
+    }];
+    
+    [debugDB router:@"GET" extension:@".icon" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+        //        NSLog(@"request header:%@",request.headers);
         SFDebugDBRespone *response = [[SFDebugDBRespone alloc]initWithFileName:request.path];
         return response;
     }];
@@ -52,7 +59,6 @@
         return response;
     }];
 
-    
     [debugDB router:@"GET" basePath:@"/getTableList" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
         SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
         response.contentType =  @"application/json";
@@ -66,17 +72,13 @@
         response.contentType =  @"application/json";
         return response;
     }];
-    
-//    [debugDB router:@"GET" basePath:@"/getDbList" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-//        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-//        response.contentType =  @"application/json";
-//        return response;
-//    }];
-//    [debugDB router:@"GET" basePath:@"/updateTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-//        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-//        response.contentType =  @"application/json";
-//        return response;
-//    }];
+
+    [debugDB router:@"GET" basePath:@"/updateTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
+        response.contentType =  @"application/json";
+        response.html =  [SFDebugDBQueryRespone updateTableDataAndGetResponse:request.path];
+        return response;
+    }];
 //    [debugDB router:@"GET" basePath:@"/deleteTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
 //        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
 //        response.contentType =  @"application/json";
@@ -87,11 +89,12 @@
 //        response.contentType =  @"application/json";
 //        return response;
 //    }];
-//    [debugDB router:@"GET" basePath:@"/query" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-//        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-//        response.contentType =  @"application/json";
-//        return response;
-//    }];
+    [debugDB router:@"GET" basePath:@"/query" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
+        response.contentType =  @"application/json";
+        response.html =  [SFDebugDBQueryRespone executeQueryAndGetResponse:request.path];
+        return response;
+    }];
 //    [debugDB router:@"GET" basePath:@"/downloadDb" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
 //        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
 //        response.contentType =  @"application/json";

@@ -23,4 +23,10 @@
 @interface NSString (sf_urlParam)
 - (NSDictionary *)sf_url_parameters;
 - (NSString *)sf_url_valueForParameter:(NSString *)parameterKey;
+- (NSString *)sf_query_valueForParameter:(NSString *)parameterKey;
+@end
+
+
+@interface NSString (sf_dictionaryValue)
+-(id)sf_JSONValue;
 @end

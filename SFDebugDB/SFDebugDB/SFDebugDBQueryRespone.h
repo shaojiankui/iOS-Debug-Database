@@ -12,4 +12,6 @@
 + (NSString*)getDBListResponse:(NSArray*)databaseDirectorys;
 + (NSString*)getTableListResponse:(NSString*)route;
 + (NSString*)getAllDataFromTheTableResponse:(NSString*)route;
++ (NSString*)executeQueryAndGetResponse:(NSString*)route;
++ (NSString*)updateTableDataAndGetResponse:(NSString*)route;
 @end

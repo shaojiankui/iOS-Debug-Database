@@ -43,7 +43,7 @@ function queryFunction() {
 
    $.ajax({url: "query?query="+escape(query), success: function(result){
 
-           result = JSON.parse(result);
+//           result = JSON.parse(result);
            inflateData(result);
 
    }});
@@ -215,7 +215,11 @@ function inflateData(result){
       if(!result.isSelectQuery){
          showErrorInfo("Query Execution Failed");
       }else {
-         showErrorInfo("Some Error Occurred");
+          if(result.errorMessage){
+              showErrorInfo(result.errorMessage);
+          }else{
+              showErrorInfo("Some Error Occurred");
+          }
       }
    }
 

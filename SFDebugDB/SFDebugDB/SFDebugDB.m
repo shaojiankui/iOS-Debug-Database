@@ -51,7 +51,7 @@
 - (NSDictionary*)databasesList:(NSArray*)databaseDirectorys{
     NSMutableDictionary *databasePaths = [NSMutableDictionary dictionary];
     for (NSString *directory in databaseDirectorys) {
-        NSArray *dirList = [[[NSFileManager defaultManager] subpathsAtPath:directory] pathsMatchingExtensions:@[@"sqlite",@"SQLITE"]];
+        NSArray *dirList = [[[NSFileManager defaultManager] subpathsAtPath:directory] pathsMatchingExtensions:@[@"sqlite",@"SQLITE",@"db",@"DB"]];
         for (int i=0;i<[dirList count];i++) {
             NSString *suffix = [dirList[i] lastPathComponent];
             [databasePaths setObject:[directory stringByAppendingPathComponent:suffix] forKey:suffix];

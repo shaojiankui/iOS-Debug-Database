@@ -23,7 +23,7 @@
     return manager;
 }
 - (NSArray*)getTableData:(sqlite3 *)db sql:(NSString*)sql tableName:(NSString*)tableName{
-   return [self executeQuery:sql rowType:RowTypeObject];
+   return [self executeQuery:sql rowType:SFDebugDBRowTypeObjectWithColumInfo];
 }
 - (BOOL)openDatabase:(NSString*)databasePath{
     if (self.dbPath && _db && ![databasePath isEqualToString:self.dbPath])
@@ -59,7 +59,7 @@
     
 }
 - (NSArray*)allTables{
-    NSArray *descs = [self executeQuery:@"SELECT tbl_name FROM sqlite_master WHERE type = 'table'" rowType:RowTypeObject];
+    NSArray *descs = [self executeQuery:@"SELECT tbl_name FROM sqlite_master WHERE type = 'table'" rowType:SFDebugDBRowTypeObject];
     NSMutableArray *result = [NSMutableArray array];
     for (NSDictionary *row in descs) {
         NSString *tblName = [row objectForKey:@"tbl_name"];
@@ -68,12 +68,12 @@
     return result;
 }
 //表
-- (NSDictionary*)infoForTable:(NSString *)table
+- (NSArray*)infoForTable:(NSString *)table
 {
     char *sql = sqlite3_mprintf("PRAGMA table_info(%q)", [table UTF8String]);
     NSString *query = [NSString stringWithUTF8String:sql];
     sqlite3_free(sql);
-    return [[self executeQuery:query rowType:RowTypeObject] firstObject];
+    return [self executeQuery:query rowType:SFDebugDBRowTypeObject];
 }
 //表列数
 - (NSUInteger)columnsInTable:(NSString *)table
@@ -81,13 +81,13 @@
     char *sql = sqlite3_mprintf("PRAGMA table_info(%q)", [table UTF8String]);
     NSString *query = [NSString stringWithUTF8String:sql];
     sqlite3_free(sql);
-    return [[self executeQuery:query rowType:RowTypeObject] count];
+    return [[self executeQuery:query rowType:SFDebugDBRowTypeObject] count];
 }
 //所有表头
 -(NSArray *)columnTitlesInTable:(NSString *)table
 {
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY ROWID ASC LIMIT 1",table];
-    NSDictionary *result = [[self executeQuery:query rowType:RowTypeObject] lastObject];
+    NSDictionary *result = [[self executeQuery:query rowType:SFDebugDBRowTypeObject] lastObject];
     return [result allKeys];
 }
 #pragma mark - execute methods
@@ -119,7 +119,7 @@
  *
  *  @return 结果集
  */
-- (NSArray *)executeQuery:(NSString *)query rowType:(RowType)type;
+- (NSArray *)executeQuery:(NSString *)query rowType:(SFDebugDBRowType)type;
 {
     __block NSMutableArray *result = [NSMutableArray array];
     [self executeQuery:query rowType:type withBlock:^(id row, NSError *error, BOOL finished) {
@@ -144,35 +144,18 @@
  *  @param type           ow对象类型,关联对象/关联数组
  *  @param fetchItemBlock 遍历block,id row为每一条记录对应的对象或者数组
  */
--(void)executeQuery:(NSString *)query rowType:(RowType)type withBlock:(FetchItemBlock)fetchItemBlock{
+-(void)executeQuery:(NSString *)query rowType:(SFDebugDBRowType)type withBlock:(FetchItemBlock)fetchItemBlock{
     
     NSString *fixedQuery = [query stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-    
-    //    for (int i = 0; i < [params count]; i++) {
-    //        id obj = [params objectAtIndex:i];
-    //        if ([obj isKindOfClass:[NSString class]]) {
-    //            const char * utfString = [(NSString *)obj UTF8String];
-    //            sqlite3_bind_text(stmt, i+1, utfString,
-    //                              (int)strlen(utfString), SQLITE_TRANSIENT);
-    //        } else if ([obj isKindOfClass:[NSData class]]) {
-    //            sqlite3_bind_blob(stmt, i+1, [(NSData *)obj bytes],
-    //                              (int)[(NSData *)obj length], SQLITE_TRANSIENT);
-    //        } else if ([obj isKindOfClass:[NSNumber class]]) {
-    //            if ([(NSNumber *)obj doubleValue] == (double)([(NSNumber *)obj longLongValue])) {
-    //                sqlite3_bind_double(stmt, i+1, [(NSNumber *)obj doubleValue]);
-    //            } else {
-    //                sqlite3_bind_int64(stmt, i+1, [(NSNumber *)obj longLongValue]);
-    //            }
-    //        }
-    //    }
-    //
     sqlite3_stmt *statement;
     const char *tail;
     __unused int resultCode = sqlite3_prepare_v2(_db, [fixedQuery UTF8String], -1, &statement, &tail);
     if (statement) {
         
         int num_cols, i, column_type;
+        id value;
         id obj;
+
         NSString *key;
         NSMutableDictionary *row;
         
@@ -182,38 +165,49 @@
             num_cols = sqlite3_data_count(statement);
             for (i = 0; i < num_cols; i++) {
                 obj = nil;
+                value= nil;
                 column_type = sqlite3_column_type(statement, i);
+                
                 switch (column_type) {
                     case SQLITE_INTEGER:
-                        obj = [NSNumber numberWithLongLong:sqlite3_column_int64(statement, i)];
+                        value = [NSNumber numberWithLongLong:sqlite3_column_int64(statement, i)];
                         break;
                     case SQLITE_FLOAT:
-                        obj = [NSNumber numberWithDouble:sqlite3_column_double(statement, i)];
+                        value = [NSNumber numberWithDouble:sqlite3_column_double(statement, i)];
                         break;
                     case SQLITE_TEXT:
-                        obj = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, i)];
+                        value = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, i)];
                         break;
                     case SQLITE_BLOB:
-                        obj = [NSData dataWithBytes:sqlite3_column_blob(statement, i) length:sqlite3_column_bytes(statement, i)];
+                        value = [NSData dataWithBytes:sqlite3_column_blob(statement, i) length:sqlite3_column_bytes(statement, i)];
                         break;
                     case SQLITE_NULL:
-                        obj = [NSNull null];
+                        value = [NSNull null];
                         break;
                     default:{
                         NSLog(@"[SQLITE] UNKNOWN DATATYPE");
                     }
                         break;
                 }
-                
                 key = [NSString stringWithUTF8String:sqlite3_column_name(statement, i)];
-                [row setObject:obj?:@"" forKey:key];
-            }
-            if (type == RowTypeArray) {
-                if (fetchItemBlock) {
-                    fetchItemBlock([row allValues], nil, NO);
+
+                if(type == SFDebugDBRowTypeObjectWithColumInfo){
+                    obj = [NSMutableDictionary dictionary];
+                    [obj setObject:@(column_type) forKey:@"dataType"];
+                    [obj setObject:value?:@"" forKey:@"value"];
+                    [obj setObject:key?:@"" forKey:@"key"];
+                    [row setObject:obj?:@{} forKey:key];
+                }else{
+                    [row setObject:value?:@"" forKey:key];
                 }
-            }else{
-                if (fetchItemBlock) {
+       
+            }
+            if (fetchItemBlock) {
+                if (type == SFDebugDBRowTypeArray) {
+                    fetchItemBlock([row allValues], nil, NO);
+                }else if(type == SFDebugDBRowTypeObject){
+                    fetchItemBlock(row, nil, NO);
+                }else{
                     fetchItemBlock(row, nil, NO);
                 }
             }

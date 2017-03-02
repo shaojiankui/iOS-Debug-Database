@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "sqlite3.h"
-typedef NS_ENUM(NSUInteger, RowType) {
-    RowTypeObject,  //关联对象
-    RowTypeArray    //关联数组
+typedef NS_ENUM(NSUInteger, SFDebugDBRowType) {
+    SFDebugDBRowTypeObjectWithColumInfo,  //关联对象 带列信息
+    SFDebugDBRowTypeObject,  //关联对象
+    SFDebugDBRowTypeArray    //关联数组
 };
 typedef void (^FetchItemBlock)(id row, NSError *error, BOOL finished);
 
@@ -20,10 +21,10 @@ typedef void (^FetchItemBlock)(id row, NSError *error, BOOL finished);
 + (instancetype)sharedManager;
 - (BOOL)openDatabase:(NSString*)databasePath;
 - (NSArray*)getTableData:(sqlite3 *)db sql:(NSString*)sql tableName:(NSString*)tableName;
-
+-(BOOL)executeUpdate:(NSString*)sql;
 
 - (NSArray*)allTables;
-- (NSDictionary*)infoForTable:(NSString *)table;
+- (NSArray*)infoForTable:(NSString *)table;
 //表列数
 - (NSUInteger)columnsInTable:(NSString *)table;
 //所有表头
