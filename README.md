@@ -29,6 +29,7 @@ __unused SFDebugDB *debugDB =  [SFDebugDB  startWithPort:9001 directorys:@[@"NSU
 
 ```
 * Port: startWithPort can specified any port
+* Directorys: exist .sqlite or .db folder base path,or database path,string "NSUserDefault" constant stand for read NSUserDefault
 * DebugDB: Open http://XXX.XXX.X.XXX:9001 in your browser
 
 * You can also always get the debug address url from your code by calling the method `[SFDebugDB shared].address;`
@@ -37,12 +38,9 @@ Now open the provided link in your browser.
 
 Important:
 - Your iOS device should be connected to the same Network (Wifi or LAN).
-- Default support iOS Simulator and device connected Xcode, not suport device without xcode connection,use
-- 
-```
- [SFDebugDB shared].enableInAnyEnvironment = YES;
-```
-can enable it!
+- Default support iOS Simulator and device connected Xcode, not suport device without xcode connection,use `[SFDebugDB shared].enableInAnyEnvironment = YES;` can enable it!
+
+
 
 
 
