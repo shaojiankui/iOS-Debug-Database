@@ -17,92 +17,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[NSUserDefaults standardUserDefaults] setObject:@"test" forKey:@"testKey"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    //directorys NSUserDefault固定字符串代表UserDefault
     NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    SFDebugDB *debugDB =  [SFDebugDB  startWithPort:9001 directorys:@[documents,[[NSBundle mainBundle] resourcePath]]];
- 
-    [debugDB router:@"GET" path:@"/" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-        NSString *index = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]initWithFile:index];
-        return response;
-    }];
+    __unused SFDebugDB *debugDB =  [SFDebugDB  startWithPort:9001 directorys:@[@"NSUserDefault",documents,[[NSBundle mainBundle] resourcePath]]];
+    NSLog(@"SFDebugDB start at address:%@",[SFDebugDB shared].address);
+//   ///未连接Xcode的真机默认不能调试，任意位置设置enableInAnyEnvironment为YES开启调试
+//    [SFDebugDB shared].enableInAnyEnvironment = YES;
     
-    [debugDB router:@"GET" extension:@".js" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-//        NSLog(@"request header:%@",request.headers);
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]initWithFileName:request.path];
-        return response;
-    }];
-    
-    [debugDB router:@"GET" extension:@".icon" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-        //        NSLog(@"request header:%@",request.headers);
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]initWithFileName:request.path];
-        return response;
-    }];
-    
-    [debugDB router:@"GET" extension:@".css" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-//        NSLog(@"request header:%@",request.headers);
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]initWithFileName:request.path];
-        return response;
-    }];
-    
-    [debugDB router:@"GET" extension:@".png" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-        //        NSLog(@"request header:%@",request.headers);
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]initWithFileName:request.path];
-        return response;
-    }];
-    
-    [debugDB router:@"GET" path:@"/getDbList" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-//        response.html =  [SFDebugDBQueryRespone getDBListResponse:debugDB.directorys];
-        NSDictionary *JSON   = @{@"rows":[debugDB.databases allKeys]?:[NSNull null]};
-        response.html =  [JSON sf_dic_JSONString];
-        response.contentType =  @"application/json";
-        return response;
-    }];
-
-    [debugDB router:@"GET" basePath:@"/getTableList" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-        response.contentType =  @"application/json";
-        response.html =  [SFDebugDBQueryRespone getTableListResponse:request.path databases:debugDB.databases];
-        return response;
-    }];
-    
-    [debugDB router:@"GET" basePath:@"/getAllDataFromTheTable" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-        response.html =  [SFDebugDBQueryRespone getAllDataFromTheTableResponse:request.path];
-        response.contentType =  @"application/json";
-        return response;
-    }];
-
-    [debugDB router:@"GET" basePath:@"/updateTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-        response.contentType =  @"application/json";
-        response.html =  [SFDebugDBQueryRespone updateTableDataAndGetResponse:request.path];
-        return response;
-    }];
-
-    [debugDB router:@"GET" basePath:@"/deleteTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-        response.contentType =  @"application/json";
-        response.html =  [SFDebugDBQueryRespone deleteTableDataAndGetResponse:request.path];
-        return response;
-    }];
-    
-    [debugDB router:@"GET" basePath:@"/query" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-        response.contentType =  @"application/json";
-        response.html =  [SFDebugDBQueryRespone executeQueryAndGetResponse:request.path];
-        return response;
-    }];
-    
-    [debugDB router:@"GET" basePath:@"/downloadDb" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-        response.contentType =  @"application/octet-stream";
-        response.htmlData =  [SFDebugDBQueryRespone getDatabase:request.path  databases:debugDB.databases];
-        response.contentDisposition =[NSString stringWithFormat:@"Content-Disposition: attachment; filename=%@",@"export.sqlite"];
-
-        return response;
-    }];
-
 //    [[NSRunLoop mainRunLoop] run];
     return YES;
 }

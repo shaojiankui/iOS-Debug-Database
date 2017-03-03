@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 @interface SFDebugDBUtil : NSObject
 
 @end
@@ -29,4 +29,10 @@
 
 @interface NSString (sf_dictionaryValue)
 -(id)sf_JSONObejctValue;
+@end
+
+
+@interface UIDevice (sf_Extensions)
++(NSString*)sf_platform;
++(NSString*)sf_platformString;
 @end

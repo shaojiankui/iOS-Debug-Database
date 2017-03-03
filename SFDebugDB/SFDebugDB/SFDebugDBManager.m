@@ -85,6 +85,8 @@
         [self close];
     }
     self.dbPath = databasePath;
+    self.dbName = [databasePath lastPathComponent];
+
     //多线程模式
     sqlite3_config(SQLITE_CONFIG_MULTITHREAD);
     //串行
@@ -138,11 +140,23 @@
     return [[self executeQuery:query rowType:SFDebugDBRowTypeObject] count];
 }
 //所有表头
--(NSArray *)columnTitlesInTable:(NSString *)table
+- (NSArray *)columnTitlesInTable:(NSString *)table
 {
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY ROWID ASC LIMIT 1",table];
     NSDictionary *result = [[self executeQuery:query rowType:SFDebugDBRowTypeObject] lastObject];
     return [result allKeys];
+}
+// 是否存在表
+- (BOOL)isExistTable:(NSString *)table
+{
+    NSArray  *array = [self executeQuery:[NSString stringWithFormat:@"SELECT count(*) as 'count' FROM sqlite_master WHERE type ='table' and name = '%@'",table] rowType:SFDebugDBRowTypeObject];
+    NSDictionary *item = [array lastObject];
+    if(item && [[item objectForKey:@"count"] integerValue]>0)
+    {
+        return YES;
+    }else{
+        return NO;
+    }
 }
 #pragma mark - execute methods
 /**
@@ -188,7 +202,6 @@
             NSLog(@"Query error!");
         }
     }];
-    
     return result;
 }
 /**
@@ -289,6 +302,9 @@
         if(sqlite3_close(_db) == SQLITE_OK)
         {
             //NSLog(@"Close Database success。");
+            _dbName = nil;
+            _dbPath = nil;
+            _db = NULL;
             return YES;;
         }
         else

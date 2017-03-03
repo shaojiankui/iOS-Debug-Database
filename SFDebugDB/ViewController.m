@@ -30,7 +30,7 @@
 
 
 - (IBAction)refreshTouched:(UIButton*)sender {
-        [sender setTitle:[NSString stringWithFormat:@"http://%@:%zd",[SFDebugDB shared].host,[SFDebugDB shared].port] forState:UIControlStateNormal];
+   [sender setTitle:[SFDebugDB shared].address forState:UIControlStateNormal];
 }
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
 

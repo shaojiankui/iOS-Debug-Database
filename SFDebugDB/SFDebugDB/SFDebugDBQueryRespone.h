@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "SFDebugDBRespone.h"
 @interface SFDebugDBQueryRespone : SFDebugDBRespone
-+ (NSString*)getDBListResponse:(NSArray*)databaseDirectorys;
 + (NSString*)getTableListResponse:(NSString*)route databases:(NSDictionary*)databases;
 + (NSString*)getAllDataFromTheTableResponse:(NSString*)route;
 + (NSString*)executeQueryAndGetResponse:(NSString*)route;

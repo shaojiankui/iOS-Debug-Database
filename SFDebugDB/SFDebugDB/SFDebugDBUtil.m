@@ -121,3 +121,25 @@ static NSString *const kFragmentBegin       = @"#";
 }
 @end
 
+
+#include <sys/sysctl.h>
+
+
+@implementation UIDevice (sf_Extensions)
++(NSString*)sf_platform{
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char *machine = malloc(size);
+    sysctlbyname("hw.machine", machine, &size, NULL, 0);
+    //NSString *platform = [NSString stringWithCString:machine];
+    NSString* platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
+    free(machine);
+    return platform;
+}
++(NSString*)sf_platformString{
+    NSString *platform = [self sf_platform];
+    if ([platform isEqualToString:@"i386"])
+        return @"Simulator";
+    return platform;
+}
+@end

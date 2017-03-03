@@ -23,15 +23,17 @@ typedef void (^FetchItemBlock)(id row, NSError *error, BOOL finished);
 + (instancetype)sharedManager;
 - (BOOL)openDatabase:(NSString*)databasePath;
 - (NSArray*)getTableData:(sqlite3 *)db sql:(NSString*)sql tableName:(NSString*)tableName;
--(BOOL)executeUpdate:(NSString*)sql;
+- (BOOL)executeUpdate:(NSString*)sql;
 
 - (NSArray*)allTables;
 - (NSArray*)infoForTable:(NSString *)table;
 //表列数
 - (NSUInteger)columnsInTable:(NSString *)table;
 //所有表头
--(NSArray *)columnTitlesInTable:(NSString *)table;
+- (NSArray *)columnTitlesInTable:(NSString *)table;
+- (BOOL)isExistTable:(NSString *)table;
 
--(BOOL)update:(NSString*)table data:(NSDictionary*)data where:(id)condition;
--(BOOL)delete:(NSString*)table where:(id)condition limit:(NSString*)limit;
+- (BOOL)update:(NSString*)table data:(NSDictionary*)data where:(id)condition;
+- (BOOL)delete:(NSString*)table where:(id)condition limit:(NSString*)limit;
+- (BOOL)close;
 @end

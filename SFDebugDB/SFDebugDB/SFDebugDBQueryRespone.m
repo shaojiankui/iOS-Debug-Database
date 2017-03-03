@@ -12,51 +12,92 @@
 //#import "SFDebugDB.h"
 #import "SFDebugDBModel.h"
 @implementation SFDebugDBQueryRespone
-+ (NSString*)getDBListResponse:(NSArray*)databaseDirectorys{
-    NSMutableDictionary *databasePaths = [NSMutableDictionary dictionary];
-    for (NSString *directory in databaseDirectorys) {
-        NSArray *dirList = [[[NSFileManager defaultManager] subpathsAtPath:directory] pathsMatchingExtensions:@[@"sqlite",@"SQLITE",@"db",@"DB"]];
-        for (int i=0;i<[dirList count];i++) {
-            NSString *suffix = [dirList[i] lastPathComponent];
-            [databasePaths setObject:[directory stringByAppendingPathComponent:suffix] forKey:suffix];
-        }
-    }
-    
-    NSDictionary *JSON   = @{@"rows":[databasePaths allKeys]?:[NSNull null]};
-    NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:JSON
-                                                       options:NSJSONWritingPrettyPrinted  error:&error];
-    
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    return jsonString;
-}
+
 + (NSString*)getTableListResponse:(NSString*)route databases:(NSDictionary*)databases{
     NSString *database = nil;
-    if ([route rangeOfString:@"?database="].location != NSNotFound){
+    NSDictionary *respone;
+    NSMutableArray *list;
+    if ([route rangeOfString:@"?database="].location != NSNotFound)
+    {
         database = [[route substringFromIndex:[route rangeOfString:@"?"].location+1] sf_url_valueForParameter:@"database"];
     }
-    NSString *databasePath = [databases objectForKey:database];
-    
-    [[SFDebugDBManager sharedManager] openDatabase:databasePath];;
-    NSArray *list = [[SFDebugDBManager sharedManager] allTables];
-    NSDictionary *JSON   = @{@"rows":list?:[NSNull null]};
+    NSLog(@"switch database:%@",database);
 
-    return [JSON sf_dic_JSONString];
+    if ([database isEqualToString:@"NSUserDefault"])
+    {
+        [[SFDebugDBManager sharedManager] close];
+        [SFDebugDBManager sharedManager].dbName = @"NSUserDefault";
+
+//        NSString *bundleID = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"] stringByAppendingString:@".plist"];
+//        NSString *plist = [[[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"Preferences"] stringByAppendingPathComponent:bundleID];
+//        NSDictionary *data = [NSDictionary dictionaryWithContentsOfFile:plist];
+        NSDictionary *data = [[NSUserDefaults standardUserDefaults]dictionaryRepresentation];
+        list = [NSMutableArray array];
+        for (NSString *row in [data allKeys]) {
+            [list addObject:row];
+        }
+        respone  = @{@"rows":list?:[NSNull null]};
+    }else
+    {
+        NSString *databasePath = [databases objectForKey:database];
+        [[SFDebugDBManager sharedManager] openDatabase:databasePath];;
+        list = [[[SFDebugDBManager sharedManager] allTables] copy];
+    }
+    respone  = @{@"rows":list?:[NSNull null]};
+    return [respone sf_dic_JSONString];
 }
 
 + (NSString*)getAllDataFromTheTableResponse:(NSString*)route {
-    if ([SFDebugDBManager sharedManager].db == NULL) {
-        NSDictionary *respone = @{@"isSelectQuery":@(true),@"isSuccessful":@(false),@"errorMessage":@"请重新选择数据库"};
-        return [respone sf_dic_JSONString];
-    }
     NSString *tableName = nil;
-    
-    if ([route rangeOfString:@"?tableName="].location != NSNotFound){
+    if ([route rangeOfString:@"?tableName="].location != NSNotFound)
+    {
         tableName = [route sf_query_valueForParameter:@"tableName"];
-
     }
-    NSString *sql = [NSString stringWithFormat:@"select * from %@",tableName];
-    return  [self getTableData:sql table:tableName];
+    NSLog(@"switch table:%@",tableName);
+
+    if ([[SFDebugDBManager sharedManager].dbName isEqualToString:@"NSUserDefault"])
+    {
+        NSDictionary *userData = [[NSUserDefaults standardUserDefaults]dictionaryRepresentation];
+        NSMutableDictionary *tableData = [NSMutableDictionary dictionary];
+        [tableData setObject:@(1) forKey:@"isSelectQuery"];
+        [tableData setObject:@(1) forKey:@"isSuccessful"];
+        
+        NSMutableArray *tableInfoResult = [NSMutableArray array];
+        //titles
+        id item = [userData objectForKey:tableName];
+        NSDictionary *tableInfo = @{@"isPrimary":@(false),@"title":tableName?:@"",@"dataType":@"String"};
+        [tableInfoResult addObject:tableInfo];
+        [tableData setObject:tableInfoResult forKey:@"tableInfos"];
+        
+        BOOL isEditable = tableName != nil && [tableData objectForKey:@"tableInfos"] != nil;
+        [tableData setObject:@(isEditable) forKey:@"isEditable"];
+        
+        //rows
+        NSMutableArray *rows = [NSMutableArray array];
+        if ([item isKindOfClass:[NSString class]] || [item isKindOfClass:[NSNumber class]]) {
+            [rows addObject:@[@{@"value":item}]];
+        }else  if([item isKindOfClass:[NSArray class]]){
+            for (int i = 0; i < [item count]; i++) {
+                NSMutableArray *row = [NSMutableArray array];
+                id value = [item objectAtIndex:i];
+                [row  addObject:@{@"value":value}];
+                [rows addObject:row];
+            }
+        }
+        [tableData setObject:rows forKey:@"rows"];
+        return  [tableData sf_dic_JSONString];
+    }else
+    {
+        if ([SFDebugDBManager sharedManager].db == NULL) {
+            NSDictionary *respone = @{@"isSelectQuery":@(true),@"isSuccessful":@(false),@"errorMessage":@"Please Reselect Database!"};
+            return [respone sf_dic_JSONString];
+        }
+        NSString *sql = [NSString stringWithFormat:@"select * from %@",tableName];
+        NSDictionary *jsonD = [self getTableData:sql table:tableName];
+        return  [jsonD sf_dic_JSONString];
+    }
+    return nil;
+    
 }
 + (NSString*)getTableNameFromQuery:(NSString*)selectQuery{
     NSArray *words = [selectQuery  componentsSeparatedByString:@" "];
@@ -79,13 +120,18 @@
     }
     return table;
 }
-+ (NSString*)getTableData:(NSString *)sql table:(NSString*)tableName{
++ (NSDictionary*)getTableData:(NSString *)sql table:(NSString*)tableName{
     if ([SFDebugDBManager sharedManager].db == NULL) {
-        NSDictionary *respone = @{@"isSelectQuery":@(true),@"isSuccessful":@(false),@"errorMessage":@"请重新选择数据库"};
-        return [respone sf_dic_JSONString];
+        NSDictionary *respone = @{@"isSelectQuery":@(true),@"isSuccessful":@(false),@"errorMessage":@"Please Reselect Database!"};
+        return respone;
     }
     if (tableName == nil) {
         tableName = [self getTableNameFromQuery:sql];
+    }
+    
+    if (![[SFDebugDBManager sharedManager] isExistTable:tableName]) {
+        NSDictionary *respone = @{@"isSelectQuery":@(true),@"isSuccessful":@(false),@"errorMessage":@"Database table not exist!"};
+        return respone;
     }
     
     NSArray *response = [[SFDebugDBManager sharedManager] getTableData:nil sql:sql tableName:tableName];
@@ -155,13 +201,15 @@
         }
         [rows addObject:row];
     }
+   
     [tableData setObject:rows forKey:@"rows"];
-    return [tableData sf_dic_JSONString];
+    return tableData;
 }
 //
 + (NSString*)executeQueryAndGetResponse:(NSString*)route {
-    if ([SFDebugDBManager sharedManager].db == NULL) {
-        NSDictionary *respone = @{@"isSelectQuery":@(true),@"isSuccessful":@(false),@"errorMessage":@"请重新选择数据库"};
+    if ([SFDebugDBManager sharedManager].db == NULL)
+    {
+        NSDictionary *respone = @{@"isSelectQuery":@(true),@"isSuccessful":@(false),@"errorMessage":@"Please Reselect Database!"};
         return [respone sf_dic_JSONString];
     }
     
@@ -169,23 +217,27 @@
     NSString *data;
     NSString *first;
     
-    if ([route rangeOfString:@"?query="].location != NSNotFound){
+    if ([route rangeOfString:@"?query="].location != NSNotFound)
+    {
         query = [route sf_query_valueForParameter:@"query"];
     }
     
-    
-    if (query.length != 0) {
+    if (query.length != 0)
+    {
         first = [[[query componentsSeparatedByString:@" "] firstObject] lowercaseString];
-        if ([first isEqualToString:@"select"]) {
-            NSString *respone =  [self getTableData:query table:nil];
-            data = respone;
-        } else {
+        if ([first isEqualToString:@"select"])
+        {
+            NSDictionary *respone =  [self getTableData:query table:nil];
+            data = [respone sf_dic_JSONString];
+    
+        } else
+        {
             BOOL result =  [[SFDebugDBManager sharedManager] executeUpdate:query];
             NSDictionary *respone;
             if (result) {
                 respone = @{@"isSelectQuery":@(true),@"isSuccessful":@(true)};
             }else{
-                respone = @{@"isSelectQuery":@(true),@"isSuccessful":@(false),@"errorMessage":@"数据库操作失败"};
+                respone = @{@"isSelectQuery":@(true),@"isSuccessful":@(false),@"errorMessage":@"Database Opration faild!"};
             }
             data =[respone sf_dic_JSONString];
         }
@@ -203,26 +255,56 @@
     NSString *tableName = [route sf_query_valueForParameter:@"tableName"];
     NSString *updatedData = [route sf_query_valueForParameter:@"updatedData"];
     NSArray *rowDataRequests =   [updatedData sf_JSONObejctValue];
-
     NSMutableDictionary *updateRowResponse = [NSMutableDictionary dictionary];
-    if (rowDataRequests == nil || tableName.length==0) {
-        [updateRowResponse setObject:@(false) forKey:@"isSuccessful"];
+
+    if ([[SFDebugDBManager sharedManager].dbName isEqualToString:@"NSUserDefault"])
+    {
+        NSMutableDictionary *record = [[rowDataRequests firstObject] mutableCopy];
+        id userValue = [[NSUserDefaults standardUserDefaults] objectForKey:[record objectForKey:@"title"]];
+      
+        if ([userValue isKindOfClass:[NSArray class]]) {
+//            NSMutableArray *userValues = [userValue mutableCopy];
+//            for (id obj in userValue) {
+//                if ([obj isEqualToString:[record objectForKey:@"value"]]) {
+//                    break;
+//                }
+//            }
+//            [[NSUserDefaults standardUserDefaults] setObject:userValues forKey:[record objectForKey:@"title"]];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+            [updateRowResponse setObject:@(false) forKey:@"isSuccessful"];
+
+        }else if([userValue isKindOfClass:[NSString class]])  {
+            [[NSUserDefaults standardUserDefaults]setObject:[record objectForKey:@"value"] forKey:[record objectForKey:@"title"]];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [updateRowResponse setObject:@(true) forKey:@"isSuccessful"];
+        }else{
+           //.....
+            [updateRowResponse setObject:@(false) forKey:@"isSuccessful"];
+        }
+        return [updateRowResponse sf_dic_JSONString];
+
+    }else{
+        if (rowDataRequests == nil || tableName.length==0)
+        {
+            [updateRowResponse setObject:@(false) forKey:@"isSuccessful"];
+            return [updateRowResponse sf_dic_JSONString];
+        }
+        
+        NSMutableDictionary *contentValues = [NSMutableDictionary dictionary];
+        NSMutableDictionary *where = [NSMutableDictionary dictionary];
+        for (id rowDataRequest in rowDataRequests) {
+            if ([[rowDataRequest objectForKey:@"isPrimary"] boolValue]) {
+                [where setObject:[rowDataRequest objectForKey:@"value"]?:[NSNull null] forKey:[rowDataRequest objectForKey:@"title"]];
+            } else {
+                [contentValues setObject:[rowDataRequest objectForKey:@"value"] forKey:[rowDataRequest objectForKey:@"title"]];
+            }
+        }
+        
+        BOOL result =  [[SFDebugDBManager sharedManager] update:tableName data:contentValues where:where];
+        [updateRowResponse setObject:@(result?true:false) forKey:@"isSuccessful"];
         return [updateRowResponse sf_dic_JSONString];
     }
-    
-    NSMutableDictionary *contentValues = [NSMutableDictionary dictionary];
-    NSMutableDictionary *where = [NSMutableDictionary dictionary];
-    for (id rowDataRequest in rowDataRequests) {
-        if ([[rowDataRequest objectForKey:@"isPrimary"] boolValue]) {
-            [where setObject:[rowDataRequest objectForKey:@"value"]?:[NSNull null] forKey:[rowDataRequest objectForKey:@"title"]];
-        } else {
-            [contentValues setObject:[rowDataRequest objectForKey:@"value"] forKey:[rowDataRequest objectForKey:@"title"]];
-        }
-    }
-    
-    BOOL result =  [[SFDebugDBManager sharedManager] update:tableName data:contentValues where:where];
-    [updateRowResponse setObject:@(result?true:false) forKey:@"isSuccessful"];
-    return [updateRowResponse sf_dic_JSONString];
+    return nil;
 }
 + (NSString*)deleteTableDataAndGetResponse:(NSString*)route{
     NSString *tableName = [route sf_query_valueForParameter:@"tableName"];
@@ -230,21 +312,51 @@
     NSArray *rowDataRequests =   [updatedData sf_JSONObejctValue];
     
     NSMutableDictionary *updateRowResponse = [NSMutableDictionary dictionary];
-    if (rowDataRequests == nil || tableName.length==0) {
-        [updateRowResponse setObject:@(false) forKey:@"isSuccessful"];
+    
+    if ([[SFDebugDBManager sharedManager].dbName isEqualToString:@"NSUserDefault"])
+    {
+        NSMutableDictionary *record = [[rowDataRequests firstObject] mutableCopy];
+        id userValue = [[NSUserDefaults standardUserDefaults] objectForKey:[record objectForKey:@"title"]];
+        
+        if ([userValue isKindOfClass:[NSArray class]]) {
+            NSMutableArray *userMutableValues = [userValue mutableCopy];
+            for (id obj in userMutableValues) {
+                if ([obj isEqualToString:[record objectForKey:@"value"]]) {
+                    [userMutableValues removeObject:obj];
+                    break;
+                }
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:userMutableValues forKey:[record objectForKey:@"title"]];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }else if([userValue isKindOfClass:[NSString class]])  {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:[record objectForKey:@"title"]];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }else{
+            //.....
+        }
+        [updateRowResponse setObject:@(true) forKey:@"isSuccessful"];
+        return [updateRowResponse sf_dic_JSONString];
+
+    }else
+    {
+        if (rowDataRequests == nil || tableName.length==0)
+        {
+            [updateRowResponse setObject:@(false) forKey:@"isSuccessful"];
+            return [updateRowResponse sf_dic_JSONString];
+        }
+        
+        NSMutableDictionary *where = [NSMutableDictionary dictionary];
+        for (id rowDataRequest in rowDataRequests) {
+            if ([[rowDataRequest objectForKey:@"isPrimary"] boolValue]) {
+                [where setObject:[rowDataRequest objectForKey:@"value"]?:[NSNull null] forKey:[rowDataRequest objectForKey:@"title"]];
+            }
+        }
+        
+        BOOL result = [[SFDebugDBManager sharedManager] delete:tableName where:where limit:nil];
+        [updateRowResponse setObject:@(result?true:false) forKey:@"isSuccessful"];
         return [updateRowResponse sf_dic_JSONString];
     }
-    
-    NSMutableDictionary *where = [NSMutableDictionary dictionary];
-    for (id rowDataRequest in rowDataRequests) {
-        if ([[rowDataRequest objectForKey:@"isPrimary"] boolValue]) {
-            [where setObject:[rowDataRequest objectForKey:@"value"]?:[NSNull null] forKey:[rowDataRequest objectForKey:@"title"]];
-        }
-    }
-    
-    BOOL result = [[SFDebugDBManager sharedManager] delete:tableName where:where limit:nil];
-    [updateRowResponse setObject:@(result?true:false) forKey:@"isSuccessful"];
-    return [updateRowResponse sf_dic_JSONString];
+    return nil;
 }
 + (NSData*)getDatabase:(NSString*)route databases:(NSDictionary*)databases{
     if ([SFDebugDBManager sharedManager].dbPath.length<=0) {
