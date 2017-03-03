@@ -17,8 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-//    NSString *path = [NSString stringWithFormat:@"http://%@:%zd",[SFDebugDB shared].host,[SFDebugDB shared].port];
-//    
+//
 //    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:path]]];
 }
 
@@ -30,10 +29,8 @@
 
 
 
-- (IBAction)refreshTouched:(id)sender {
-//    NSString *path = [NSString stringWithFormat:@"http://127.0.0.1:%zd",[SFDebugDB shared].port];
-//    
-//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:path]]];
+- (IBAction)refreshTouched:(UIButton*)sender {
+        [sender setTitle:[NSString stringWithFormat:@"http://%@:%zd",[SFDebugDB shared].host,[SFDebugDB shared].port] forState:UIControlStateNormal];
 }
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
 

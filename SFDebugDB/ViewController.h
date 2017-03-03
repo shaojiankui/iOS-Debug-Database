@@ -10,7 +10,6 @@
 
 @interface ViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 - (IBAction)refreshTouched:(id)sender;
 @end
