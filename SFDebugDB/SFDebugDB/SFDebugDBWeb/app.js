@@ -250,7 +250,7 @@ function updateTableData(updatedData, callback) {
         type: 'GET',
         data: requestParameters,
         success: function(response) {
-            response = JSON.parse(response);
+//            response = JSON.parse(response);
             if(response.isSuccessful){
                console.log("Data updated successfully");
                callback(true);
@@ -290,7 +290,7 @@ function deleteTableData(deleteData, callback) {
             type: 'GET',
             data: requestParameters,
             success: function(response) {
-                response = JSON.parse(response);
+//                response = JSON.parse(response);
                 if(response.isSuccessful){
                    console.log("Data deleted successfully");
                    callback(true);

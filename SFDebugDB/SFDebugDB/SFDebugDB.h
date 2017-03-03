@@ -19,6 +19,7 @@
 @property(nonatomic, readonly) NSString *host;
 @property(nonatomic, readonly) NSArray *directorys;
 @property(nonatomic, readonly) NSDictionary *databases;
+
 - (instancetype)init __attribute__((unavailable("Forbidden use init!")));
 + (SFDebugDB*)shared;
 

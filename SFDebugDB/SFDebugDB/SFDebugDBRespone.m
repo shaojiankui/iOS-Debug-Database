@@ -68,7 +68,7 @@
 -(NSData *)data{
  
 //     _htmlData?:[_html dataUsingEncoding:NSUTF8StringEncoding]
-    
+    NSString *response;
     if (self.htmlData) {
         self.html = [[NSString alloc]initWithData:_htmlData encoding:NSUTF8StringEncoding];
         self.contentLength = self.htmlData.length;
@@ -76,8 +76,16 @@
         NSData *data = [_html dataUsingEncoding:NSUTF8StringEncoding];
         self.contentLength = data.length;
     }
-    
-    NSString *response = [NSString stringWithFormat:@"HTTP/1.1 %zd OK\nContent-Type: %@; charset=UTF-8\n\n%@",_statusCode,self.contentType?:@"text/html",self.html?:@""];
+    if ([self.contentType isEqualToString:@"application/octet-stream"] || self.contentDisposition) {
+        self.contentType = @"application/octet-stream";
+//        self.contentDisposition = []
+        self.html = [[NSString alloc]initWithData:_htmlData encoding:NSASCIIStringEncoding];
+
+        response = [NSString stringWithFormat:@"HTTP/1.1 %zd OK\nContent-Type: %@; charset=UTF-8\n%@%@\n\n",_statusCode,self.contentType?:@"text/html",self.html?:@"",self.contentDisposition];
+
+    }else{
+        response = [NSString stringWithFormat:@"HTTP/1.1 %zd OK\nContent-Type: %@; charset=UTF-8\n\n%@",_statusCode,self.contentType?:@"text/html",self.html?:@""];
+    }
     return [response dataUsingEncoding:NSUTF8StringEncoding];
 }
 + (NSString*)detectMimeType:(NSString *)fileName{

@@ -17,6 +17,8 @@ typedef void (^FetchItemBlock)(id row, NSError *error, BOOL finished);
 
 @interface SFDebugDBManager : NSObject
 @property(nonatomic) sqlite3 *db;
+@property(strong,nonatomic) NSString *dbPath;
+@property(strong,nonatomic) NSString *dbName;
 
 + (instancetype)sharedManager;
 - (BOOL)openDatabase:(NSString*)databasePath;
@@ -29,4 +31,7 @@ typedef void (^FetchItemBlock)(id row, NSError *error, BOOL finished);
 - (NSUInteger)columnsInTable:(NSString *)table;
 //所有表头
 -(NSArray *)columnTitlesInTable:(NSString *)table;
+
+-(BOOL)update:(NSString*)table data:(NSDictionary*)data where:(id)condition;
+-(BOOL)delete:(NSString*)table where:(id)condition limit:(NSString*)limit;
 @end

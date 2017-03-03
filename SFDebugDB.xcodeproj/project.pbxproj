@@ -38,7 +38,6 @@
 		B810309C1E665F0600D3CC3C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B810309A1E665F0600D3CC3C /* LaunchScreen.storyboard */; };
 		B81030A61E665F4A00D3CC3C /* SFDebugDB.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030A51E665F4A00D3CC3C /* SFDebugDB.m */; };
 		B81030A91E6660D000D3CC3C /* SFDebugDBServer.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030A81E6660D000D3CC3C /* SFDebugDBServer.m */; };
-		B81030AC1E66610600D3CC3C /* SFDebugDBFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030AB1E66610600D3CC3C /* SFDebugDBFinder.m */; };
 		B81030B41E6665DB00D3CC3C /* Documentation.html in Resources */ = {isa = PBXBuildFile; fileRef = B81030AF1E6665DB00D3CC3C /* Documentation.html */; };
 		B81030B51E6665DB00D3CC3C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030B11E6665DB00D3CC3C /* GCDAsyncSocket.m */; };
 		B81030B61E6665DB00D3CC3C /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B81030B31E6665DB00D3CC3C /* GCDAsyncUdpSocket.m */; };
@@ -91,8 +90,6 @@
 		B81030A51E665F4A00D3CC3C /* SFDebugDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDB.m; sourceTree = "<group>"; };
 		B81030A71E6660D000D3CC3C /* SFDebugDBServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDBServer.h; sourceTree = "<group>"; };
 		B81030A81E6660D000D3CC3C /* SFDebugDBServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBServer.m; sourceTree = "<group>"; };
-		B81030AA1E66610600D3CC3C /* SFDebugDBFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDebugDBFinder.h; sourceTree = "<group>"; };
-		B81030AB1E66610600D3CC3C /* SFDebugDBFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDebugDBFinder.m; sourceTree = "<group>"; };
 		B81030AF1E6665DB00D3CC3C /* Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Documentation.html; sourceTree = "<group>"; };
 		B81030B01E6665DB00D3CC3C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		B81030B11E6665DB00D3CC3C /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
@@ -206,8 +203,6 @@
 				B81030A51E665F4A00D3CC3C /* SFDebugDB.m */,
 				B81030A71E6660D000D3CC3C /* SFDebugDBServer.h */,
 				B81030A81E6660D000D3CC3C /* SFDebugDBServer.m */,
-				B81030AA1E66610600D3CC3C /* SFDebugDBFinder.h */,
-				B81030AB1E66610600D3CC3C /* SFDebugDBFinder.m */,
 				B81030B71E66740200D3CC3C /* SFDebugRouter.h */,
 				B81030B81E66740200D3CC3C /* SFDebugRouter.m */,
 				B81030C01E66753800D3CC3C /* SFDebugDBRequest.h */,
@@ -350,7 +345,6 @@
 				B81030A91E6660D000D3CC3C /* SFDebugDBServer.m in Sources */,
 				B81030B61E6665DB00D3CC3C /* GCDAsyncUdpSocket.m in Sources */,
 				B803E0271E66CAE10050C4AA /* SFDebugDBManager.m in Sources */,
-				B81030AC1E66610600D3CC3C /* SFDebugDBFinder.m in Sources */,
 				B81030B51E6665DB00D3CC3C /* GCDAsyncSocket.m in Sources */,
 				B810308E1E665F0600D3CC3C /* main.m in Sources */,
 			);

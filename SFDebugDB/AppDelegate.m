@@ -62,7 +62,7 @@
     [debugDB router:@"GET" basePath:@"/getTableList" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
         SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
         response.contentType =  @"application/json";
-        response.html =  [SFDebugDBQueryRespone getTableListResponse:request.path];
+        response.html =  [SFDebugDBQueryRespone getTableListResponse:request.path databases:debugDB.databases];
         return response;
     }];
     
@@ -79,27 +79,29 @@
         response.html =  [SFDebugDBQueryRespone updateTableDataAndGetResponse:request.path];
         return response;
     }];
-//    [debugDB router:@"GET" basePath:@"/deleteTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-//        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-//        response.contentType =  @"application/json";
-//        return response;
-//    }];
-//    [debugDB router:@"GET" basePath:@"/deleteTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-//        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-//        response.contentType =  @"application/json";
-//        return response;
-//    }];
+
+    [debugDB router:@"GET" basePath:@"/deleteTableData" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
+        response.contentType =  @"application/json";
+        response.html =  [SFDebugDBQueryRespone deleteTableDataAndGetResponse:request.path];
+        return response;
+    }];
+    
     [debugDB router:@"GET" basePath:@"/query" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
         SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
         response.contentType =  @"application/json";
         response.html =  [SFDebugDBQueryRespone executeQueryAndGetResponse:request.path];
         return response;
     }];
-//    [debugDB router:@"GET" basePath:@"/downloadDb" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
-//        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-//        response.contentType =  @"application/json";
-//        return response;
-//    }];
+    
+    [debugDB router:@"GET" basePath:@"/downloadDb" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
+        SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
+        response.contentType =  @"application/octet-stream";
+        response.htmlData =  [SFDebugDBQueryRespone getDatabase:request.path  databases:debugDB.databases];
+        response.contentDisposition =[NSString stringWithFormat:@"Content-Disposition: attachment; filename=%@",@"export.sqlite"];
+
+        return response;
+    }];
 
 //    [[NSRunLoop mainRunLoop] run];
     return YES;

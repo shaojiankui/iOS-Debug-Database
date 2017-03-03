@@ -28,5 +28,5 @@
 
 
 @interface NSString (sf_dictionaryValue)
--(id)sf_JSONValue;
+-(id)sf_JSONObejctValue;
 @end

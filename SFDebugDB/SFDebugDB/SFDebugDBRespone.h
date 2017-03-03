@@ -14,7 +14,10 @@
 @property (nonatomic,assign) NSInteger statusCode;
 @property (nonatomic,strong) NSData *data;
 @property (nonatomic,copy)   NSString *contentType;
+
 @property (nonatomic,assign) NSUInteger contentLength;
+@property (nonatomic,copy)   NSString *contentDisposition;
+
 - (instancetype)initWithHTML:(NSString*)html;
 - (instancetype)initWithHTMLData:(NSData*)htmlData;
 - (instancetype)initWithFile:(NSString*)filePath;

@@ -9,8 +9,7 @@
 #import "SFDebugDBQueryRespone.h"
 #import "SFDebugDBManager.h"
 #import "SFDebugDBUtil.h"
-#import "SFDebugDB.h"
-
+//#import "SFDebugDB.h"
 #import "SFDebugDBModel.h"
 @implementation SFDebugDBQueryRespone
 + (NSString*)getDBListResponse:(NSArray*)databaseDirectorys{
@@ -31,12 +30,12 @@
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     return jsonString;
 }
-+ (NSString*)getTableListResponse:(NSString*)route{
++ (NSString*)getTableListResponse:(NSString*)route databases:(NSDictionary*)databases{
     NSString *database = nil;
     if ([route rangeOfString:@"?database="].location != NSNotFound){
         database = [[route substringFromIndex:[route rangeOfString:@"?"].location+1] sf_url_valueForParameter:@"database"];
     }
-    NSString *databasePath = [[[SFDebugDB shared] databases] objectForKey:database];
+    NSString *databasePath = [databases objectForKey:database];
     
     [[SFDebugDBManager sharedManager] openDatabase:databasePath];;
     NSArray *list = [[SFDebugDBManager sharedManager] allTables];
@@ -201,67 +200,57 @@
 
 //
 + (NSString*)updateTableDataAndGetResponse:(NSString*)route{
-//    Uri uri = Uri.parse(URLDecoder.decode(route, "UTF-8"));
-//    String tableName = uri.getQueryParameter("tableName");
-    
     NSString *tableName = [route sf_query_valueForParameter:@"tableName"];
     NSString *updatedData = [route sf_query_valueForParameter:@"updatedData"];
+    NSArray *rowDataRequests =   [updatedData sf_JSONObejctValue];
 
-//    id item =   [updatedData sf_dictionaryValue];
+    NSMutableDictionary *updateRowResponse = [NSMutableDictionary dictionary];
+    if (rowDataRequests == nil || tableName.length==0) {
+        [updateRowResponse setObject:@(false) forKey:@"isSuccessful"];
+        return [updateRowResponse sf_dic_JSONString];
+    }
     
-//    List<RowDataRequest> rowDataRequests = mGson.fromJson(updatedData, new TypeToken<List<RowDataRequest>>() {
-//    }.getType());
-//    if (Constants.APP_SHARED_PREFERENCES.equals(mSelectedDatabase)) {
-//        response = PrefHelper.updateRow(mContext, tableName, rowDataRequests);
-//    } else {
-//        response = DatabaseHelper.updateRow(mDatabase, tableName, rowDataRequests);
-//    }
+    NSMutableDictionary *contentValues = [NSMutableDictionary dictionary];
+    NSMutableDictionary *where = [NSMutableDictionary dictionary];
+    for (id rowDataRequest in rowDataRequests) {
+        if ([[rowDataRequest objectForKey:@"isPrimary"] boolValue]) {
+            [where setObject:[rowDataRequest objectForKey:@"value"]?:[NSNull null] forKey:[rowDataRequest objectForKey:@"title"]];
+        } else {
+            [contentValues setObject:[rowDataRequest objectForKey:@"value"] forKey:[rowDataRequest objectForKey:@"title"]];
+        }
+    }
     
-    
-    return nil;
-    
-    
-//    UpdateRowResponse response;
-//    try {
-//        Uri uri = Uri.parse(URLDecoder.decode(route, "UTF-8"));
-//        String tableName = uri.getQueryParameter("tableName");
-//        String updatedData = uri.getQueryParameter("updatedData");
-//        List<RowDataRequest> rowDataRequests = mGson.fromJson(updatedData, new TypeToken<List<RowDataRequest>>() {
-//        }.getType());
-//        if (Constants.APP_SHARED_PREFERENCES.equals(mSelectedDatabase)) {
-//            response = PrefHelper.updateRow(mContext, tableName, rowDataRequests);
-//        } else {
-//            response = DatabaseHelper.updateRow(mDatabase, tableName, rowDataRequests);
-//        }
-//        return mGson.toJson(response);
-//    } catch (Exception e) {
-//        e.printStackTrace();
-//        response = new UpdateRowResponse();
-//        response.isSuccessful = false;
-//        return mGson.toJson(response);
-//    }
+    BOOL result =  [[SFDebugDBManager sharedManager] update:tableName data:contentValues where:where];
+    [updateRowResponse setObject:@(result?true:false) forKey:@"isSuccessful"];
+    return [updateRowResponse sf_dic_JSONString];
 }
-//
-//
-//private String deleteTableDataAndGetResponse(String route) {
-//    UpdateRowResponse response;
-//    try {
-//        Uri uri = Uri.parse(URLDecoder.decode(route, "UTF-8"));
-//        String tableName = uri.getQueryParameter("tableName");
-//        String updatedData = uri.getQueryParameter("deleteData");
-//        List<RowDataRequest> rowDataRequests = mGson.fromJson(updatedData, new TypeToken<List<RowDataRequest>>() {
-//        }.getType());
-//        if (Constants.APP_SHARED_PREFERENCES.equals(mSelectedDatabase)) {
-//            response = PrefHelper.deleteRow(mContext, tableName, rowDataRequests);
-//        } else {
-//            response = DatabaseHelper.deleteRow(mDatabase, tableName, rowDataRequests);
-//        }
-//        return mGson.toJson(response);
-//    } catch (Exception e) {
-//        e.printStackTrace();
-//        response = new UpdateRowResponse();
-//        response.isSuccessful = false;
-//        return mGson.toJson(response);
-//    }
-//}
++ (NSString*)deleteTableDataAndGetResponse:(NSString*)route{
+    NSString *tableName = [route sf_query_valueForParameter:@"tableName"];
+    NSString *updatedData = [route sf_query_valueForParameter:@"deleteData"];
+    NSArray *rowDataRequests =   [updatedData sf_JSONObejctValue];
+    
+    NSMutableDictionary *updateRowResponse = [NSMutableDictionary dictionary];
+    if (rowDataRequests == nil || tableName.length==0) {
+        [updateRowResponse setObject:@(false) forKey:@"isSuccessful"];
+        return [updateRowResponse sf_dic_JSONString];
+    }
+    
+    NSMutableDictionary *where = [NSMutableDictionary dictionary];
+    for (id rowDataRequest in rowDataRequests) {
+        if ([[rowDataRequest objectForKey:@"isPrimary"] boolValue]) {
+            [where setObject:[rowDataRequest objectForKey:@"value"]?:[NSNull null] forKey:[rowDataRequest objectForKey:@"title"]];
+        }
+    }
+    
+    BOOL result = [[SFDebugDBManager sharedManager] delete:tableName where:where limit:nil];
+    [updateRowResponse setObject:@(result?true:false) forKey:@"isSuccessful"];
+    return [updateRowResponse sf_dic_JSONString];
+}
++ (NSData*)getDatabase:(NSString*)route databases:(NSDictionary*)databases{
+    if ([SFDebugDBManager sharedManager].dbPath.length<=0) {
+        return nil;
+    }
+    NSData *data =  [NSData dataWithContentsOfFile:[SFDebugDBManager sharedManager].dbPath];
+    return data;
+}
 @end

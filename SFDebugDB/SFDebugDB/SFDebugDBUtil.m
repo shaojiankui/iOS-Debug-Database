@@ -109,7 +109,7 @@ static NSString *const kFragmentBegin       = @"#";
 
 
 @implementation NSString (sf_dictionaryValue)
--(id)sf_JSONValue{
+-(id)sf_JSONObejctValue{
     NSError *errorJson;
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[self dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&errorJson];
     if (errorJson != nil) {

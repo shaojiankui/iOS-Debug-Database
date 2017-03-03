@@ -8,8 +8,7 @@
 
 #import "SFDebugDBManager.h"
 @interface SFDebugDBManager()
-@property(strong,nonatomic) NSString *dbPath;
-@property(strong,nonatomic) NSString *dbName;
+
 @end
 
 @implementation SFDebugDBManager
@@ -22,9 +21,64 @@
     });
     return manager;
 }
+#pragma mark --CRUD
+-(NSString*)implode_field_value:(NSDictionary*)data split:(NSString*)split{
+    if(!split){
+        split = @",";
+    }
+    NSMutableString *sql = [NSMutableString string];
+    NSString *comma = @"";
+    for (NSString *key in data) {
+        [sql appendString:[NSString stringWithFormat:@"%@%@ = '%@'",comma,key,[data valueForKey:key]]];
+        comma = split;
+    }
+    return sql;
+}
+-(BOOL)update:(NSString*)table data:(NSDictionary*)data where:(id)condition{
+    NSString *sql = [self implode_field_value:data split:nil];
+    NSString *where = @"";
+    if (!condition) {
+        where = @"1";
+    } else if ([condition  isKindOfClass:[NSDictionary class]])
+    {
+        where = [self implode_field_value:condition split:@" AND "];
+    } else {
+        where = condition;
+    }
+    NSString *sqlString = [NSString stringWithFormat:@"UPDATE \"%@\" SET %@ WHERE %@",table,sql,where];
+    NSLog(@"update: %@",sqlString);
+    return [self executeUpdate:sqlString];
+}
+/**
+ *  删除表记录
+ *
+ *  @param table     表名
+ *  @param condition where条件,字符串,或者是数据字典
+ *  @param limit     删除记录条数
+ *
+ *  @return 删除结果
+ */
+-(BOOL)delete:(NSString*)table where:(id)condition limit:(NSString*)limit{
+    NSString *where;
+    NSString *limitString =@"";
+    if (limit) {
+        limitString = [NSString stringWithFormat:@"LIMIT %@",limit];
+    }
+    if (!condition) {
+        where = @"1";
+    }else if ([condition  isKindOfClass:[NSDictionary class]]) {
+        where = [self implode_field_value:condition split:@" AND "];
+    } else {
+        where = condition;
+    }
+    NSString *sqlString =[NSString stringWithFormat:@"DELETE FROM \"%@\" WHERE %@ %@",table,where,limitString];
+    NSLog(@"delete %@",sqlString);
+    return [self executeUpdate:sqlString];
+}
 - (NSArray*)getTableData:(sqlite3 *)db sql:(NSString*)sql tableName:(NSString*)tableName{
    return [self executeQuery:sql rowType:SFDebugDBRowTypeObjectWithColumInfo];
 }
+#pragma mark --other
 - (BOOL)openDatabase:(NSString*)databasePath{
     if (self.dbPath && _db && ![databasePath isEqualToString:self.dbPath])
     {
@@ -247,4 +301,5 @@
     }
     return YES;
 }
+
 @end

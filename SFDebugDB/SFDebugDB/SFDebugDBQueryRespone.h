@@ -10,8 +10,10 @@
 #import "SFDebugDBRespone.h"
 @interface SFDebugDBQueryRespone : SFDebugDBRespone
 + (NSString*)getDBListResponse:(NSArray*)databaseDirectorys;
-+ (NSString*)getTableListResponse:(NSString*)route;
++ (NSString*)getTableListResponse:(NSString*)route databases:(NSDictionary*)databases;
 + (NSString*)getAllDataFromTheTableResponse:(NSString*)route;
 + (NSString*)executeQueryAndGetResponse:(NSString*)route;
 + (NSString*)updateTableDataAndGetResponse:(NSString*)route;
++ (NSString*)deleteTableDataAndGetResponse:(NSString*)route;
++ (NSData*)getDatabase:(NSString*)route databases:(NSDictionary*)databases;
 @end
