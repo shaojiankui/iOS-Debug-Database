@@ -40,9 +40,11 @@
     return debugDB;
 }
 -(void)setEnableInAnyEnvironment:(BOOL)enableInAnyEnvironment{
-    if (!_enableInAnyEnvironment) {
+    if (enableInAnyEnvironment) {
         [[SFDebugDB shared] startServer];
         [[self class] startRouter:[SFDebugDB shared]];
+    }else{
+        [_server disconnect];
     }
     _enableInAnyEnvironment = enableInAnyEnvironment;
 }
