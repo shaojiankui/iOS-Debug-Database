@@ -68,7 +68,6 @@
 -(NSData *)data{
  
 //     _htmlData?:[_html dataUsingEncoding:NSUTF8StringEncoding]
-    NSString *response;
     if (self.htmlData) {
         self.html = [[NSString alloc]initWithData:_htmlData encoding:NSUTF8StringEncoding];
         self.contentLength = self.htmlData.length;
@@ -77,17 +76,27 @@
         self.contentLength = data.length;
     }
     if (self.fileName) {
-//        self.contentType = @"application/octet-stream";
-        self.html = [[NSString alloc]initWithData:_htmlData encoding:NSUTF8StringEncoding];
-        NSString *contentDisposition = [NSString stringWithFormat:@"Content-Disposition: attachment; filename=%@",self.fileName];
-        response = [NSString stringWithFormat:@"HTTP/1.0 %zd OK\nAccept-Ranges:bytes\nContent-Type: %@; charset=UTF-8\n%@\nContent-Length:%zd\n\n",_statusCode,self.contentType?:@"text/html",contentDisposition,_htmlData.length];
-
-        NSMutableData *r = [[response dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        NSMutableString *res = [NSMutableString string];
+        [res appendString:[NSString stringWithFormat:@"HTTP/1.0 %zd\n",_statusCode]];
+        [res appendString:@"Accept-Ranges:bytes\n"];
+        [res appendString:[NSString stringWithFormat:@"Content-Type: %@; charset=UTF-8\n",self.contentType?:@"text/html"]];
+        [res appendString:[NSString stringWithFormat:@"Content-Length:%zd\n",self.contentLength]];
+        [res appendString:[NSString stringWithFormat:@"Content-Disposition: attachment; filename=%@\n",self.fileName]];
+        [res appendString:@"\n"];
+      
+        NSMutableData *r = [[res dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
         [r appendData:_htmlData];
         return r;
     }else{
-        response = [NSString stringWithFormat:@"HTTP/1.0 %zd OK\nContent-Type: %@; charset=UTF-8\nContent-Length:%zd\n\n%@",_statusCode,self.contentType?:@"text/html",self.contentLength,self.html?:@""];
-        return [response dataUsingEncoding:NSUTF8StringEncoding];
+        NSMutableString *res = [NSMutableString string];
+        [res appendString:[NSString stringWithFormat:@"HTTP/1.0 %zd\n",_statusCode]];
+        [res appendString:@"Accept-Ranges:bytes\n"];
+        [res appendString:[NSString stringWithFormat:@"Content-Type: %@; charset=UTF-8\n",self.contentType?:@"text/html"]];
+        [res appendString:[NSString stringWithFormat:@"Content-Length:%zd\n",self.contentLength]];
+        [res appendString:@"\n"];
+        [res appendString:self.html?:@""];
+
+        return [res dataUsingEncoding:NSUTF8StringEncoding];
 
     }
 }
