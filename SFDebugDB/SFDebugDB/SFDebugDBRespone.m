@@ -76,17 +76,20 @@
         NSData *data = [_html dataUsingEncoding:NSUTF8StringEncoding];
         self.contentLength = data.length;
     }
-    if ([self.contentType isEqualToString:@"application/octet-stream"] || self.contentDisposition) {
-        self.contentType = @"application/octet-stream";
-//        self.contentDisposition = []
-        self.html = [[NSString alloc]initWithData:_htmlData encoding:NSASCIIStringEncoding];
+    if (self.fileName) {
+//        self.contentType = @"application/octet-stream";
+        self.html = [[NSString alloc]initWithData:_htmlData encoding:NSUTF8StringEncoding];
+        NSString *contentDisposition = [NSString stringWithFormat:@"Content-Disposition: attachment; filename=%@",self.fileName];
+        response = [NSString stringWithFormat:@"HTTP/1.0 %zd OK\nAccept-Ranges:bytes\nContent-Type: %@; charset=UTF-8\n%@\nContent-Length:%zd\n\n",_statusCode,self.contentType?:@"text/html",contentDisposition,_htmlData.length];
 
-        response = [NSString stringWithFormat:@"HTTP/1.1 %zd OK\nContent-Type: %@; charset=UTF-8\n%@%@\n\n",_statusCode,self.contentType?:@"text/html",self.html?:@"",self.contentDisposition];
-
+        NSMutableData *r = [[response dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        [r appendData:_htmlData];
+        return r;
     }else{
-        response = [NSString stringWithFormat:@"HTTP/1.1 %zd OK\nContent-Type: %@; charset=UTF-8\n\n%@",_statusCode,self.contentType?:@"text/html",self.html?:@""];
+        response = [NSString stringWithFormat:@"HTTP/1.0 %zd OK\nContent-Type: %@; charset=UTF-8\nContent-Length:%zd\n\n%@",_statusCode,self.contentType?:@"text/html",self.contentLength,self.html?:@""];
+        return [response dataUsingEncoding:NSUTF8StringEncoding];
+
     }
-    return [response dataUsingEncoding:NSUTF8StringEncoding];
 }
 + (NSString*)detectMimeType:(NSString *)fileName{
     if (fileName.length==0) {

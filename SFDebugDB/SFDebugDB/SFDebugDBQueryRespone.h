@@ -15,4 +15,6 @@
 + (NSString*)updateTableDataAndGetResponse:(NSString*)route;
 + (NSString*)deleteTableDataAndGetResponse:(NSString*)route;
 + (NSData*)getDatabase:(NSString*)route databases:(NSDictionary*)databases;
++ (NSString*)getContenTypeWithRoute:(NSString*)route;
++ (NSString*)getDBNameWithRoute:(NSString*)route;
 @end

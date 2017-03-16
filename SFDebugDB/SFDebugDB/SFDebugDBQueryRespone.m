@@ -28,9 +28,6 @@
         [[SFDebugDBManager sharedManager] close];
         [SFDebugDBManager sharedManager].dbName = @"NSUserDefault";
 
-//        NSString *bundleID = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"] stringByAppendingString:@".plist"];
-//        NSString *plist = [[[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"Preferences"] stringByAppendingPathComponent:bundleID];
-//        NSDictionary *data = [NSDictionary dictionaryWithContentsOfFile:plist];
         NSDictionary *data = [[NSUserDefaults standardUserDefaults]dictionaryRepresentation];
         list = [NSMutableArray array];
         for (NSString *row in [data allKeys]) {
@@ -358,11 +355,38 @@
     }
     return nil;
 }
++ (NSString*)getDBNameWithRoute:(NSString*)route{
+    NSString *dbName = [route sf_query_valueForParameter:@"dbName"];
+    if ([dbName isEqualToString:@"NSUserDefault"]) {
+        dbName = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"] stringByAppendingString:@".plist"];
+    }
+    return dbName;
+}
++ (NSString*)getContenTypeWithRoute:(NSString*)route{
+    NSString *dbName = [route sf_query_valueForParameter:@"dbName"];
+    NSString *contentType;
+    if ([dbName isEqualToString:@"NSUserDefault"]) {
+       contentType =  @"";
+    }else{
+        contentType =  @"application/octet-stream";
+    }
+    return contentType;
+}
 + (NSData*)getDatabase:(NSString*)route databases:(NSDictionary*)databases{
-    if ([SFDebugDBManager sharedManager].dbPath.length<=0) {
+  
+    NSString *dbName = [route sf_query_valueForParameter:@"dbName"];
+    if (dbName.length<=0) {
         return nil;
     }
-    NSData *data =  [NSData dataWithContentsOfFile:[SFDebugDBManager sharedManager].dbPath];
+    NSData *data;
+    if ([dbName isEqualToString:@"NSUserDefault"]) {
+        NSString *bundleID = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"] stringByAppendingString:@".plist"];
+        NSString *plist = [[[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"Preferences"] stringByAppendingPathComponent:bundleID];
+//        NSDictionary *data = [NSDictionary dictionaryWithContentsOfFile:plist];
+        data =  [NSData dataWithContentsOfFile:plist];
+    }else{
+        data =  [NSData dataWithContentsOfFile:[SFDebugDBManager sharedManager].dbPath];
+    }
     return data;
 }
 @end

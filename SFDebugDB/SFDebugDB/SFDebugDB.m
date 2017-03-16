@@ -139,12 +139,13 @@
     
     [debugDB router:@"GET" basePath:@"/downloadDb" handler:^SFDebugDBRespone *(SFDebugDBRequest *request) {
         SFDebugDBRespone *response = [[SFDebugDBRespone alloc]init];
-        response.contentType =  @"application/octet-stream";
+        response.contentType =  [SFDebugDBQueryRespone getContenTypeWithRoute:request.path];
         response.htmlData =  [SFDebugDBQueryRespone getDatabase:request.path  databases:debugDB.databases];
-        response.contentDisposition =[NSString stringWithFormat:@"Content-Disposition: attachment; filename=%@",@"export.sqlite"];
+        response.fileName =  [SFDebugDBQueryRespone getDBNameWithRoute:request.path];
+
         return response;
     }];
-    
+   
 }
 
 - (instancetype)initWithPort:(NSInteger)port directorys:(NSArray*)directorys{

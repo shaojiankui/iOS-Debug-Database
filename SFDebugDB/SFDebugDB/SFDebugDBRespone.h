@@ -16,7 +16,7 @@
 @property (nonatomic,copy)   NSString *contentType;
 
 @property (nonatomic,assign) NSUInteger contentLength;
-@property (nonatomic,copy)   NSString *contentDisposition;
+@property (nonatomic,copy)   NSString *fileName;
 
 - (instancetype)initWithHTML:(NSString*)html;
 - (instancetype)initWithHTMLData:(NSData*)htmlData;

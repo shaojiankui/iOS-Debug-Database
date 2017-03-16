@@ -24,7 +24,9 @@ $( document ).ready(function() {
 
 });
 
-var isDatabaseSelected = true;
+
+
+var currentDatabaseName;
 
 function getData(tableName) {
 
@@ -51,9 +53,9 @@ function queryFunction() {
 }
 
 function downloadDb() {
-    if (isDatabaseSelected) {
-        $.ajax({url: "downloadDb", success: function(){
-             window.location = 'downloadDb';
+    if (currentDatabaseName) {
+        $.ajax({url:  "downloadDb?dbName="  + currentDatabaseName, success: function(){
+             window.location = "downloadDb?dbName="  + currentDatabaseName;
         }});
     }
 }
@@ -82,20 +84,22 @@ function getDBList() {
 }
 
 function openDatabaseAndGetTableList(db) {
-
-    if("APP_SHARED_PREFERENCES" == db) {
+    
+    if("NSUserDefault" == db) {
         $('#run-query').removeClass('active');
         $('#run-query').addClass('disabled');
-        $('#selected-db-info').removeClass('active');
-        $('#selected-db-info').addClass('disabled');
-        isDatabaseSelected = false;
-        $("#selected-db-info").text("SharedPreferences");
+//        $('#selected-db-info').removeClass('active');
+//        $('#selected-db-info').addClass('disabled');
+        $('#selected-db-info').removeClass('disabled');
+        $('#selected-db-info').addClass('active');
+        currentDatabaseName = "NSUserDefault";
+        $("#selected-db-info").text("Export NSUserDefault");
     } else {
         $('#run-query').removeClass('disabled');
         $('#run-query').addClass('active');
         $('#selected-db-info').removeClass('disabled');
         $('#selected-db-info').addClass('active');
-        isDatabaseSelected = true;
+        currentDatabaseName = db;
         $("#selected-db-info").text("Export Selected Database : "+db);
     }
 
@@ -105,7 +109,7 @@ function openDatabaseAndGetTableList(db) {
 //           result = JSON.parse(result);
            var tableList = result.rows;
            var dbVersion = result.dbVersion;
-           if("APP_SHARED_PREFERENCES" != db) {
+           if("NSUserDefault" != db) {
               $("#selected-db-info").text("Export Selected Database : "+db +" Version : "+dbVersion);
            }
            $('#table-list').empty()
